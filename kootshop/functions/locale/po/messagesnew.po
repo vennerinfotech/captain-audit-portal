@@ -1,0 +1,233 @@
+# Sample translation for PHP-gettext 1.0
+# Copyright (c) 2003 Danilo Segan <danilo@kvota.net>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pigs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-10-23 04:50+0200\n"
+"PO-Revision-Date: 2003-11-01 23:40+0100\n"
+"Last-Translator: Danilo Segan <danilo@kvota.net>\n"
+"Language-Team: Serbian (sr) <danilo@kvota.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+#"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: pigs.php:19
+
+msgid "Welcome to Our store kootshop"
+msgstr "أهلأ بكم في متجرنا - كوت شوب"
+
+msgid "Call Us"
+msgstr "اتصل بنا"
+
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+msgid "Register"
+msgstr "إنشاء حساب"
+
+msgid "My Account"
+msgstr "حسابي "
+
+msgid "Profile"
+msgstr "ملفي "
+
+msgid "Wishlist"
+msgstr "امنياتي"
+
+msgid "Cart"
+msgstr "عربتي"
+
+msgid "Change Password"
+msgstr "تغيير كلمة المرور"
+
+msgid "Logout"
+msgstr "تسجيل خروج "
+
+msgid "Back"
+msgstr "عودة"
+
+msgid "Home"
+msgstr "الصفحة الرئيسية"
+
+msgid "About Us"
+msgstr "نبذة عنا"
+
+msgid "Shop"
+msgstr "المتجر"
+
+msgid "Contact Us"
+msgstr "اتصل بنا"
+
+msgid "top categories"
+msgstr "الاقسام"
+
+msgid "exclusive products"
+msgstr "المنتجات الحصرية"
+
+msgid "special products"
+msgstr " المنتجات الخاصة"
+
+msgid "New Products"
+msgstr " المنتجات الجديدة"
+
+msgid "Featured Products"
+msgstr "منتجات مميزة "
+
+msgid "Best Sellers"
+msgstr "الأكثر مبيعا"
+
+msgid "service"
+msgstr "خدمة"
+
+msgid "online service for new customer"
+msgstr "خدمة العملاء"
+
+msgid "festival offer"
+msgstr "العروض"
+
+msgid "new online special festival offer"
+msgstr "العروض الخاصة"
+
+msgid "KNOW IT ALL FIRST!"
+msgstr " تعرف على كل شيء أولاً"
+
+msgid "Never Miss Anything From kootshop By Signing Up To Our Newsletter."
+msgstr " اشترك الآن للحصول على كافة التحديثات و الأخبار الخاصة بالمنتجات"
+
+msgid "Enter your email"
+msgstr "ادخل بريدك الالكتروني"
+
+msgid "SUBSCRIBE"
+msgstr "اشتراك"
+
+msgid "Specialized in selling"
+msgstr "متخصصون في بيع"
+
+msgid "#Household utensils #Familysupplies"
+msgstr "#الاواني_المنزلية # المستلزمات_العائلية"
+
+msgid "privacy policy"
+msgstr "سياسة الخصوصية"
+
+msgid "terms & conditions"
+msgstr "الشروط و الأحكام"
+
+msgid "store information"
+msgstr "معلومات المتجر"
+
+msgid "Email Us"
+msgstr "راسلنا"
+
+msgid "kootshop all right reserved"
+msgstr " جميع الحقوق محفوظة لشركة كوت شوب"
+
+msgid "category"
+msgstr "القسم"
+
+msgid "new product"
+msgstr "منتج جديد"
+
+msgid "PRODUCT"
+msgstr "المنتج"
+
+msgid "contact us"
+msgstr "اتصل بنا"
+
+msgid "Add To WishList"
+msgstr "اضف الي امنياتي"
+
+msgid "Colors"
+msgstr "الالوان"
+
+msgid "Sizes"
+msgstr "الاحجام"
+
+msgid "No more sizes to show"
+msgstr "لا يوجد احجام"
+
+msgid "add to cart"
+msgstr " اضف الي عربتي "
+
+msgid "buy now"
+msgstr "اشتري الان"
+
+msgid "DESCRIPTION"
+msgstr "الوصف"
+
+msgid "related products"
+msgstr "منتجات ذات صلة"
+
+msgid "Address"
+msgstr "العنوان"
+
+msgid "Email"
+msgstr " البريد الإلكتروني"
+
+msgid "First Name"
+msgstr "الاسم الأول"
+
+msgid "Last Name"
+msgstr " اسم العائلة "
+
+msgid "Phone Number"
+msgstr "رقم الهاتف"
+
+msgid "Email"
+msgstr " البريد الإلكتروني"
+
+msgid "Write Your Message"
+msgstr "اكتب رسالتك"
+
+msgid "Send Your Message"
+msgstr " أرسل رسالتك"
+
+msgid "Check-out"
+msgstr "الدفع"
+
+msgid "Shipping/ Delivery Address"
+msgstr "عنوان التوصيل"
+
+msgid "House No"
+msgstr "رقم المنزل"
+
+msgid "Street Name"
+msgstr "الشارع"
+
+msgid "Governorate"
+msgstr "المحافظة"
+
+msgid "Area"
+msgstr "المنطقة"
+
+msgid "Zip Code"
+msgstr "رقم بريد"
+
+msgid "Contact No"
+msgstr "رقم الهاتف"
+
+msgid "Customer/ Billing Address"
+msgstr "عنوان الفاتورة"
+
+msgid "Product"
+msgstr "المنتج"
+
+msgid "Total"
+msgstr "الاجمالي"
+
+msgid "Delivery Charge"
+msgstr "رسوم التوصيل"
+
+msgid "Cash On Delivery"
+msgstr "الدفع عند الاستلام"
+
+msgid "KNET/Credit Card"
+msgstr "كي نت/اخرى"
+
+msgid "Cash On Delivery"
+msgstr "الدفع عند الاستلام"
+
+msgid "Continue"
+msgstr "استمرار"

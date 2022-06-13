@@ -1,0 +1,233 @@
+# Sample translation for PHP-gettext 1.0
+# Copyright (c) 2003 Danilo Segan <danilo@kvota.net>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pigs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-10-23 04:50+0200\n"
+"PO-Revision-Date: 2003-11-01 23:40+0100\n"
+"Last-Translator: Danilo Segan <danilo@kvota.net>\n"
+"Language-Team: Serbian (sr) <danilo@kvota.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+#"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: pigs.php:19
+
+msgid "Welcome to Our store kootshop"
+msgstr "اكتب هنا"
+
+msgid "Call Us"
+msgstr "اكتب هنا"
+
+msgid "Login"
+msgstr "اكتب هنا"
+
+msgid "Register"
+msgstr "اكتب هنا"
+
+msgid "My Account"
+msgstr "اكتب هنا"
+
+msgid "Profile"
+msgstr "اكتب هنا"
+
+msgid "Wishlist"
+msgstr "اكتب هنا"
+
+msgid "Cart"
+msgstr "اكتب هنا"
+
+msgid "Change Password"
+msgstr "اكتب هنا"
+
+msgid "Logout"
+msgstr "اكتب هنا"
+
+msgid "Back"
+msgstr "اكتب هنا"
+
+msgid "Home"
+msgstr "اكتب هنا"
+
+msgid "About Us"
+msgstr "اكتب هنا"
+
+msgid "Shop"
+msgstr "اكتب هنا"
+
+msgid "Contact Us"
+msgstr "اكتب هنا"
+
+msgid "top categories"
+msgstr "اكتب هنا"
+
+msgid "exclusive products"
+msgstr "اكتب هنا"
+
+msgid "special products"
+msgstr "اكتب هنا"
+
+msgid "New Products"
+msgstr "اكتب هنا"
+
+msgid "Featured Products"
+msgstr "اكتب هنا"
+
+msgid "Best Sellers"
+msgstr "اكتب هنا"
+
+msgid "service"
+msgstr "اكتب هنا"
+
+msgid "online service for new customer"
+msgstr "اكتب هنا"
+
+msgid "festival offer"
+msgstr "اكتب هنا"
+
+msgid "new online special festival offer"
+msgstr "اكتب هنا"
+
+msgid "KNOW IT ALL FIRST!"
+msgstr "اكتب هنا"
+
+msgid "Never Miss Anything From kootshop By Signing Up To Our Newsletter."
+msgstr "اكتب هنا"
+
+msgid "Enter your email"
+msgstr "اكتب هنا"
+
+msgid "SUBSCRIBE"
+msgstr "اكتب هنا"
+
+msgid "Specialized in selling"
+msgstr "اكتب هنا"
+
+msgid "#Household utensils #Familysupplies"
+msgstr "اكتب هنا"
+
+msgid "privacy policy"
+msgstr "اكتب هنا"
+
+msgid "terms & conditions"
+msgstr "اكتب هنا"
+
+msgid "store information"
+msgstr "اكتب هنا"
+
+msgid "Email Us"
+msgstr "اكتب هنا"
+
+msgid "kootshop all right reserved"
+msgstr "اكتب هنا"
+
+msgid "category"
+msgstr "اكتب هنا"
+
+msgid "new product"
+msgstr "اكتب هنا"
+
+msgid "PRODUCT"
+msgstr "اكتب هنا"
+
+msgid "contact us"
+msgstr "اكتب هنا"
+
+msgid "Add To WishList"
+msgstr "اكتب هنا"
+
+msgid "Colors"
+msgstr "اكتب هنا"
+
+msgid "Sizes"
+msgstr "اكتب هنا"
+
+msgid "No more sizes to show"
+msgstr "اكتب هنا"
+
+msgid "add to cart"
+msgstr "اكتب هنا"
+
+msgid "buy now"
+msgstr "اكتب هنا"
+
+msgid "DESCRIPTION"
+msgstr "اكتب هنا"
+
+msgid "related products"
+msgstr "اكتب هنا"
+
+msgid "Address"
+msgstr "اكتب هنا"
+
+msgid "Email"
+msgstr "اكتب هنا"
+
+msgid "First Name"
+msgstr "اكتب هنا"
+
+msgid "Last Name"
+msgstr "اكتب هنا"
+
+msgid "Phone Number"
+msgstr "اكتب هنا"
+
+msgid "Email"
+msgstr "اكتب هنا"
+
+msgid "Write Your Message"
+msgstr "اكتب هنا"
+
+msgid "Send Your Message"
+msgstr "اكتب هنا"
+
+msgid "Check-out"
+msgstr "اكتب هنا"
+
+msgid "Shipping/ Delivery Address"
+msgstr "اكتب هنا"
+
+msgid "House No"
+msgstr "اكتب هنا"
+
+msgid "Street Name"
+msgstr "اكتب هنا"
+
+msgid "Governorate"
+msgstr "اكتب هنا"
+
+msgid "Area"
+msgstr "اكتب هنا"
+
+msgid "Zip Code"
+msgstr "اكتب هنا"
+
+msgid "Contact No"
+msgstr "اكتب هنا"
+
+msgid "Customer/ Billing Address"
+msgstr "اكتب هنا"
+
+msgid "Product"
+msgstr "اكتب هنا"
+
+msgid "Total"
+msgstr "اكتب هنا"
+
+msgid "Delivery Charge"
+msgstr "اكتب هنا"
+
+msgid "Cash On Delivery"
+msgstr "اكتب هنا"
+
+msgid "KNET/Credit Card"
+msgstr "اكتب هنا"
+
+msgid "Cash On Delivery"
+msgstr "اكتب هنا"
+
+msgid "Continue"
+msgstr "اكتب هنا"
