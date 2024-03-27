@@ -1,6 +1,6 @@
 <!-- [ Session ] start -->
 <?php require_once ('process/dbh.php');
-require_once ('session.php'); ?>
+require_once ('process/session.php'); ?>
 <!-- [ Session ] end -->
 <!DOCTYPE html>
 <html lang="en">
@@ -88,69 +88,68 @@ require_once ('session.php'); ?>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                  <!--  <form action="process/assignnewproject.php" method="POST" enctype="multipart/form-data"> -->
-                                                  
+                                                    <?php
+                                                        if(isset($_GET["edit"])){
+                                                            $res=mysqli_query($conn,"select * from project where pid='".$_GET["edit"]."'");     
+                                                            while($row=mysqli_fetch_assoc($res)){
+                                                            ?>
+                                                            <form method="POST" action="process/updatetask.php" enctype="multipart/form-data">
+                                                                <input type="hidden" name="hfadminid" value="<?php echo $row["pid"]; ?>" />
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Employee/Store Name</label>
+                                                                    <select type="text" class="form-control" id="txtselcat" name="txtselcat" placeholder="Select Employee/sStore Name" required>
+                                                                        <?php
+                                                                            $res1=mysqli_query($conn,"select * from tbl_users");
+                                                                            while($item=mysqli_fetch_assoc($res1))    
+                                                                        { ?>
+                                                                            <option <?php if($row["u_id"]==$item["u_id"]) { ?> selected <?php } ?> value="<?php echo $item["u_id"]; ?>">
+                                                                                <?php echo $item["u_name"]; ?>
+                                                                            </option>
+                                                                        <?php } ?>
+                                                                    </select>
+                                                                </div>
 
-                                        <?php
-                            if(isset($_GET["edit"]))
-                            {
-                               $res=mysqli_query($conn,"select * from project where pid='".$_GET["edit"]."'");     
-                                while($row=mysqli_fetch_assoc($res))
-                                {
-                                    ?>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Task Detail</label>
+                                                                    <textarea class="form-control" id="txttsk" name="txttsk" placeholder="Enter Your Detail" required><?php echo nl2br($row["pname"]); ?></textarea>
+                                                                </div>
 
-                                                    <form method="POST" action="process/updatetask.php" enctype="multipart/form-data">
-                                            <input type="hidden" name="hfadminid" value="<?php echo $row["pid"]; ?>">
-                                                        <div class="form-group col-md-12">
-                                                            <label>Employee/Store Name</label>
-                                                            <select type="text" class="form-control" id="txtselcat" name="txtselcat" placeholder="Select Employee/sStore Name" required>
-
-                                                     
-                                                                <?php
-                                                    $res1=mysqli_query($conn,"select * from tbl_users");
-                                                    while($item=mysqli_fetch_assoc($res1))    
-                                                    { ?>
-                                                    <option <?php if($row["u_id"]==$item["u_id"]) { ?> selected <?php } ?> value="<?php echo $item["u_id"]; ?>">
-                                                        <?php echo $item["u_name"]; ?>
-                                                    </option>
-                                                   
-                                                    <?php } ?>
-                                                            </select>
-                                                        </div>
-
-                                                         <div class="form-group col-md-12">
-                                                            <label>Task Name</label>
-                                                            <input type="text" class="form-control" id="txttsk" name="txttsk" placeholder="Enter Your Task !" value="<?php echo $row["pname"]; ?>" required>
-                                                        </div>
-
-                                                        <div class="form-group col-md-12">
-                                                            <label>Start Date</label>
-                                                            <input type="datetime-local" class="form-control" id="txtmonth" name="txtmonth" placeholder="Select Date" value="<?php echo date("Y-m-d\TH:i:s", strtotime($row['startdate']));?>" required>
-                                                        </div>
-                                                         
-                                                        <div class="form-group col-md-12">
-                                                            <label>Due Date</label>
-                                                            <input type="datetime-local" class="form-control" id="txtdat" name="txtdat" placeholder="Select Due Date" value="<?php echo date("Y-m-d\TH:i:s", strtotime($row['duedate']));?>" required>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Priority</label>
-                                                            <select class="form-control" id="projectpririty" name="projectpririty" value="<?php echo $row["priority"]; ?>" required>
-                                                                <option disabled="disabled" selected="selected">Default...</option>
-                                                                <option value="High">High</option>
-                                                                <option value="Medium">Medium</option>
-                                                                <option value="Low">Low</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <button type="submit" name="btnadd" class="btn btn-primary">Update</button>
-                                                        </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Start Date</label>
+                                                                    <input type="datetime-local" class="form-control" id="txtmonth" name="txtmonth" placeholder="Select Date" value="<?php echo date("Y-m-d\TH:i:s", strtotime($row['startdate']));?>" required>
+                                                                </div>
+                                                                 
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Due Date</label>
+                                                                    <input type="datetime-local" class="form-control" id="txtdat" name="txtdat" placeholder="Select Due Date" value="<?php echo date("Y-m-d\TH:i:s", strtotime($row['duedate']));?>" required>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Priority</label>
+                                                                    <select class="form-control" id="projectpririty" name="projectpririty" value="<?php echo $row["priority"]; ?>" required>
+                                                                        <option disabled="disabled" selected="selected">Default...</option>
+                                                                        <option value="High">High</option>
+                                                                        <option value="Medium">Medium</option>
+                                                                        <option value="Low">Low</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Status</label>
+                                                                    <select class="form-control" id="substatus" name="substatus" required>
+                                                                        <option disabled="disabled" selected="selected">Default...</option>
+                                                                        <option value="Due" <?php if($row['status']=="Due") echo 'selected="selected"'; ?> >Due</option>
+                                                                        <option value="Submitted" <?php if($row['status']=="Submitted") echo 'selected="selected"'; ?> >Submitted</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="txtphoto">Proof Note</label>
+                                                                    <input type="text" class="form-control" id="prooftext" name="prooftext" placeholder="Any Note">
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <button type="submit" name="btnadd" class="btn btn-primary">Update</button>
+                                                                </div>
+                                                            </form>
+                                                        <?php }} ?>
                                                      </div>
-                                                    </form>
-                                                     <?php  }
-        
-                                        }
-
-                                     ?>
                                                 </div>
                                             </div>
                                         </div>

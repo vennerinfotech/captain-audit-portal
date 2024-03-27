@@ -1,6 +1,6 @@
 <!-- [ Session ] start -->
 <?php 
-    include("session.php"); 
+    include("process/session.php"); 
     include("process/dbh.php");
     
 ?>

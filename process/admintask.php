@@ -1,5 +1,5 @@
-<?php require_once ('../process/dbh.php');
-require_once ('../session.php'); ?>
+<?php require_once ('dbh.php');
+require_once ('session.php'); ?>
  <?php
 
                                         if(isset($_POST["btnadd"]))

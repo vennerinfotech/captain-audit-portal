@@ -1,5 +1,5 @@
 <!-- [ Session ] start -->
-    <?php include("session.php") ?>
+    <?php include("process/session.php") ?>
 <!-- [ Session ] end -->
 
 <?php 
@@ -114,7 +114,7 @@ $result2 = mysqli_query($conn, $sql2);
                                                     <thead>
                                                         <tr>
                                                             <th align = "center">No.</th>
-                                                            <th align = "center">Task Name</th>
+                                                            <th align = "center">Task Detail / Description</th>
                                                             <th align = "center">start Date</th>
                                                             <th align = "center">Due Date</th>
                                                             <th align = "center">Priority</th>
@@ -128,7 +128,7 @@ $result2 = mysqli_query($conn, $sql2);
                                                                 $counter;
                                                                 echo "<tr>";
                                                                 echo "<td>".$counter++."</td>";
-                                                                echo "<td>".$users['pname']."</td>";
+                                                                echo "<td class='text-wrap width-400' >".$users['pname']."</td>";
                                                                 echo "<td>".$users['startdate']."</td>";
                                                                 echo "<td>".$users['duedate']."</td>";
                                                                 echo "<td>".$users['priority']."</td>";
@@ -157,11 +157,18 @@ $result2 = mysqli_query($conn, $sql2);
     
     <!-- Required Js -->
     <?php include("process/script.php") ?>
+    <?php if(isset($_SESSION['status']) && $_SESSION['status'] != ''){?>
     <script>
-    $(document).ready(function() {
-        $('#example1').DataTable();
-    } );
-</script>
+        swal({
+          /*title: "Good job!",*/
+          title: "Prime Objectives",
+          text: "<?php $values = explode("*+*", preg_replace( "/\r\n/", "*+*", $_SESSION['status'])); foreach ($values as $key => $value) { echo $value.'\n'; } ?>",
+          button: "Ok Got It"
+        });
+    </script>
+    <?php
+        unset($_SESSION['status'],$_SESSION['status_code']);
+    }?>
 <?php include("footer.php") ?>
 </body>
 

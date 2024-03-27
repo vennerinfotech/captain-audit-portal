@@ -1,21 +1,16 @@
-<?php require_once ('../process/dbh.php');
-require_once ('../session.php'); ?>
-<?php 
-$qry = mysqli_query($conn,"Select isActive from tbl_staff where ustaff_id='".$_POST['hfdid']."'");
-$row=mysqli_fetch_assoc($qry);
+<?php
 
-if($row['isActive']=="Active"){
-	$result = mysqli_query($conn,"UPDATE tbl_staff SET isActive='Deactive', reson = '".$_POST['reson']."' where ustaff_id='".$_POST['hfdid']."'") or die(mysqli_error($conn));
-	 $_SESSION['status'] = "Deactive Successfully";
-     $_SESSION['status_code'] = "success";
-     header("Location:../view-staff.php");
-}
-else
-{
-	$result = mysqli_query($conn,"UPDATE tbl_staff SET isActive='Active', reson = '".$_POST['reson']."' where ustaff_id='".$_POST['hfdid']."'") or die(mysqli_error($conn));
-	 $_SESSION['status'] = "Active Successfully";
-     $_SESSION['status_code'] = "success";
-     header("Location:../view-staff.php");
-}
+require_once('dbh.php');
+require_once('session.php');
 
-?>
+$staffId = $_POST['staffId'];
+$staffStatus = $_POST['selStatus'];
+$staffReson = $_POST['staffReson'];
+echo $staffId;
+echo $staffStatus;
+echo $staffReson;
+$sql = "UPDATE `tbl_users` SET `u_status`= concat(`u_status`,'\n','$staffStatus'), `u_reson`= concat(`u_reson`,'\n','$staffReson') where `u_id`='$staffId'";
+$result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+$_SESSION['status'] = "Status Change Successfully";
+$_SESSION['status_code'] = "success";
+header("Location:../view-staff.php");

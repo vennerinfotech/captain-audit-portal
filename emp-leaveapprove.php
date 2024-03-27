@@ -1,11 +1,11 @@
 <!-- [ Session ] start -->
-    <?php include("session.php") ?>
+    <?php include("process/session.php") ?>
 <!-- [ Session ] end -->
 <?php
 
 require_once ('process/dbh.php');
 //$sql = "SELECT * from `employee_leave`";
-$sql = "Select tbl_users.u_id, tbl_users.u_name, tbl_userleave.ul_startdate, tbl_userleave.ul_enddate, tbl_userleave.ul_reason, tbl_userleave.ul_status, tbl_userleave.ul_id From tbl_users, tbl_userleave Where tbl_users.u_id = tbl_userleave.ul_uid ORDER BY `tbl_userleave`.`ul_id` DESC";
+$sql = "Select tbl_users.u_id, tbl_users.u_name, tbl_userleave.ul_startdate, tbl_userleave.ul_enddate,tbl_userleave.ul_datetime, tbl_userleave.ul_reason, tbl_userleave.ul_status, tbl_userleave.ul_id From tbl_users, tbl_userleave Where tbl_users.u_id = tbl_userleave.ul_uid ORDER BY `tbl_userleave`.`ul_id` DESC";
 
 //echo "$sql";
 $result = mysqli_query($conn, $sql);
@@ -109,6 +109,7 @@ $result = mysqli_query($conn, $sql);
                                                             <th>Name</th>
                                                             <th>Start Date</th>
                                                             <th>End Date</th>
+															<th>Date Time</th>
                                                             <th>Total Days</th>
                                                             <th>Reason</th>
                                                             <th>Status</th>
@@ -124,7 +125,7 @@ $result = mysqli_query($conn, $sql);
                                                                     $date1_ts = strtotime($users['ul_startdate']);
                                                                     $date2_ts = strtotime($users['ul_enddate']);
                                                                     $diff = $date2_ts - $date1_ts;
-                                                                    $dateDiff =  round($diff / 86400);
+                                                                    $dateDiff =  (round($diff / 86400))+1;
                                                                 
                                                             	//echo "difference " . $interval->days . " days ";
                                                                 echo "<tr>";
@@ -134,8 +135,9 @@ $result = mysqli_query($conn, $sql);
                                                                 echo "<td>".$users['u_name']."</td>";
                                                                 echo "<td>".$users['ul_startdate']."</td>";
                                                                 echo "<td>".$users['ul_enddate']."</td>";
+																echo "<td>".$users['ul_datetime']."</td>";
                                                                 echo "<td>".$dateDiff."</td>";
-                                                                echo "<td>".$users['ul_reason']."</td>";
+                                                                echo "<td class='text-wrap width-200'>".$users['ul_reason']."</td>";
                                                                 echo "<td>".$users['ul_status']."</td>";
                                                                 if($users['ul_status']=='Approved'){
                                                                      echo "<td><a style='pointer-events:none;' class='btn btn-sm btn-success' href=\"leaveapprove.php?id=$users[u_id]&token=$users[ul_id]\"><i class='feather icon-check-circle'></i>Approve</a><a class='btn btn-sm btn-danger' href=\"leavecancle.php?id=$users[u_id]&token=$users[ul_id]\"><i class='feather icon-slash'></i>Cancel</a></td>";

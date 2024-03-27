@@ -1,6 +1,6 @@
 <!-- [ Session ] start -->
 <?php include 'process/dbh.php'; ?>
-    <?php include("session.php") ?>
+<?php include("process/session.php") ?>
 <!-- [ Session ] end -->
 <!DOCTYPE html>
 <html lang="en">
@@ -19,8 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Captain Audit Portal is specially designed for management of any brand easily. Here you can track all processes of your business. Captain Audit Portal is product of THE BRAND LANDMARK" />
-    <meta name="keywords"
-        content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
+    <meta name="keywords" content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
     <meta name="author" content="The Brand Landmark" />
 
     <!-- Favicon icon -->
@@ -50,8 +49,8 @@
 
     <!-- [ Header ] start -->
     <?php include("header.php") ?>
-    <!-- [ Header ] end --> 
-    
+    <!-- [ Header ] end -->
+
     <!-- [ Main Content ] start -->
     <section class="pcoded-main-container">
         <div class="pcoded-wrapper">
@@ -70,7 +69,7 @@
                                             <ul class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href=""><i class="feather icon-home"></i></a></li>
                                                 <li class="breadcrumb-item"><a href="#!">Staff Management</a></li>
-                                                <li class="breadcrumb-item"><a href="view-staff.php">View Entry</a></li>
+                                                <li class="breadcrumb-item"><a href="view-staff.php">View Staff</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -85,12 +84,12 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>View Expense</h5>
+                                            <h5>View Staff</h5>
                                             <div class="text-right m-3">
-                                             
-                                            <!--  <button onclick="window.location='add-staff.php';" type="button" class="btn btn-sm btn-primary">Add Staff</button> -->
-                                        
-                                        </div>
+
+                                                <!--  <button onclick="window.location='add-staff.php';" type="button" class="btn btn-sm btn-primary">Add Staff</button> -->
+
+                                            </div>
                                         </div>
                                         <div class="card-body table-border-style">
                                             <div class="table-responsive">
@@ -98,71 +97,104 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
-                                                            <?php if($_SESSION['role']!="Store"){?>
-                                                            <th>Store Name</th>
-                                                            <th>Staff Name</th>
-                                                            <?php }else{ ?>
-                                                            <th>Staff Name</th>
+                                                            <?php if ($_SESSION['role'] != "Store") { ?>
+                                                                <th>Store Name</th>
+                                                                <th>Staff Name</th>
+                                                            <?php } else { ?>
+                                                                <th>Staff Name</th>
                                                             <?php } ?>
                                                             <th>Address</th>
                                                             <th>Email-Id</th>
                                                             <th>Contact</th>
+                                                            <th>status</th>
+                                                            <th>reason</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                          <?php
-                                                            $count=1;
-                                                            if($_SESSION['role']!="Store"){
-                                                                $result=mysqli_query($conn,"SELECT * FROM `tbl_users`, `tbl_staff` where `tbl_staff`.u_id = `tbl_users`.u_id") or die(mysqli_error($conn));                   
+                                                        <?php
+                                                        $count = 1;
+                                                            if (isset($_GET["page"])) {
+                                                                $page_number  = $_GET["page"];
+                                                            } else {
+                                                                $page_number = 1;
                                                             }
-                                                            else{
-                                                                $result=mysqli_query($conn,"SELECT * FROM `tbl_staff` where u_id='".$_SESSION['id']."'") or die(mysqli_error($conn));
-                                                            }                            
-                                                            while($row=mysqli_fetch_assoc($result))
-                                                            {
-                                                            ?>
+                                                            if ($_SESSION['role'] == 'Admin') {
+                                                                $sql = "SELECT * FROM `tbl_users` WHERE u_role = 'Staff'";
+                                                                $result = $conn->query($sql);
+                                                            } elseif($_SESSION['role'] == 'Branchowner') {
+                                                                $sql = "SELECT * FROM `tbl_users` WHERE u_role = 'Staff' AND u_outletid = '".$_SESSION['outlet_id']."'";
+                                                                $result = $conn->query($sql);
+                                                            }
+                                                            else {
+                                                                $out = $_SESSION['assignedoutlets'];
+                                                                $arr = (json_decode($out));
+                                                                $new_arr = implode(",",$arr);
+                                                                $sqloutlet = "SELECT u_outletid FROM tbl_users WHERE `u_id` IN (".$new_arr.")";
+                                                                $resultoutlet = $conn->query($sqloutlet);
+                                                                $r = array();
+                                                                while($row = $resultoutlet->fetch_assoc()) {
+                                                                    $r[] = $row['u_outletid'];
+                                                                }
+                                                                $new_arr1 = implode(",",$r);
+                                                                $sql = "SELECT * FROM tbl_users WHERE `u_outletid` IN (".$new_arr1.") AND `u_role` = 'Staff'";
+                                                                $result = $conn->query($sql);
+                                                            }
+                                                        
+                                                        while ($row = mysqli_fetch_assoc($result)) {
+                                                        ?>
                                                             <tr>
-                                                                <td><?php echo $count;$count++; ?></td>
-                                                                <?php if($_SESSION['role']!="Store"){?>
-                                                                <td><?php echo $row["u_name"]; ?></td>
-                                                                <td><?php echo $row["staffame"]; ?></td>
-                                                                <?php }else{ ?>
-                                                                <td><?php echo $row["staffame"]; ?></td>
+                                                                <td><?php echo $count;
+                                                                    $count++; ?></td>
+                                                                <?php if ($_SESSION['role'] != "Store") { ?>
+                                                                    <td><?php echo $row["u_name"]; ?></td>
+                                                                    <td><?php echo $row["u_name"]; ?></td>
+                                                                <?php } else { ?>
+                                                                    <td><?php echo $row["u_name"]; ?></td>
                                                                 <?php } ?>
-                                                                <td><?php echo $row["staff_address"]; ?></td>
-                                                                <td><?php echo $row["email_id"]; ?></td>
-                                                                <td><?php echo $row["contact"]; ?></td>
+                                                                <td><?php echo $row["u_address"]; ?></td>
+                                                                <td><?php echo $row["u_email"]; ?></td>
+                                                                <td><?php echo $row["u_contact"]; ?></td>
+                                                                <td><?php echo $row["u_status"]; ?></td>
+                                                                <td><?php echo nl2br($row["u_reson"]); ?></td>
                                                                 <td>
-                                                                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal" onclick="removedata(<?php echo $row["ustaff_id"]; ?>)"><?php echo $row["isActive"]; ?></button>
-                                                                    <button type="button" onclick="window.location='update-staff.php?edit=<?php echo $row["ustaff_id"]; ?>'" class="btn btn-sm btn-info">Edit</button>
+                                                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="removedata(<?php echo $row['u_id']; ?>)">Action</button>
                                                                 </td>
                                                             </tr>
                                                         <?php } ?>
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Give The Reason</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Give The Reason</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <i class="material-icons">close</i>
+                                                            </button>
+                                                        </div>
+                                                        <form method="post" action="process/isActive-staff.php">
+                                                            <div class="modal-body">
+
+                                                                <label for="reson">Status</label>
+                                                                <input type="hidden" name="staffId" id="staffId">
+                                                                <select class="form-control" name="selStatus" id="selStatus">
+                                                                    <option value="Active" selected>Active</option>
+                                                                    <option value="Left">Left</option>
+                                                                    <option value="Terminated">Terminated</option>
+                                                                    <option value="On Leave">On Leave</option>
+                                                                </select>
+                                                                <label for="reson">Enter Description</label>
+                                                                <textarea class="form-control" name="staffReson" id="staffReson" rows="5" required></textarea>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" name="btnreson" class="btn btn-primary">Submit</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                    <form method="post" action="process/isActive-staff.php">
-                                                    <div class="modal-body">
-                                                       <input type="hidden" name="hfdid" id="hfdid">
-                                                       <input type="text" class="form-control" name="reson" id="reson" required>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" name="btnreson" class="btn btn-primary">Submit</button>
-                                                    </div>
-                                                </form>
                                                 </div>
                                             </div>
-                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -173,79 +205,27 @@
             </div>
         </div>
     </section>
-    <!-- [ Main Content ] end -->
-
-    <!-- Warning Section start -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 11]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade
-               <br/>to any of the following web browsers to access this website.
-            </p>
-            <div class="iew-container">
-                <ul class="iew-download">
-                    <li>
-                        <a href="http://www.google.com/chrome/">
-                            <img src="assets/images/browser/chrome.png" alt="Chrome">
-                            <div>Chrome</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.mozilla.org/en-US/firefox/new/">
-                            <img src="assets/images/browser/firefox.png" alt="Firefox">
-                            <div>Firefox</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.opera.com">
-                            <img src="assets/images/browser/opera.png" alt="Opera">
-                            <div>Opera</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.apple.com/safari/">
-                            <img src="assets/images/browser/safari.png" alt="Safari">
-                            <div>Safari</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                            <img src="assets/images/browser/ie.png" alt="">
-                            <div>IE (11 & above)</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <p>Sorry for the inconvenience!</p>
-        </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
 
     <!-- Required Js -->
     <?php include("process/script.php") ?>
-     <?php if(isset($_SESSION['status']) && $_SESSION['status'] != ''){?>
-    <script>
-        swal({
-          /*title: "Good job!",*/
-          text: "<?php echo $_SESSION['status'];?>",
-          icon: "<?php echo $_SESSION['status_code'];?>",
-          button: "Ok",
-        });
-    </script>
-    <?php
-        unset($_SESSION['status'],$_SESSION['status_code']);
-    }?>
-    <script src="assets/js/pages/datatables.js"></script>
-        <script type="text/javascript">
-            function removedata(val)
-            {
-                
-                $("#hfdid").val(val);
-            }
-
+    <?php if (isset($_SESSION['status']) && $_SESSION['status'] != '') { ?>
+        <script>
+            swal({
+                /*title: "Good job!",*/
+                text: "<?php echo $_SESSION['status']; ?>",
+                icon: "<?php echo $_SESSION['status_code']; ?>",
+                button: "Ok",
+            });
         </script>
-<?php include("footer.php") ?>
+    <?php
+        unset($_SESSION['status'], $_SESSION['status_code']);
+    } ?>
+    <script type="text/javascript">
+        function removedata(val) {
+            $("#staffId").val(val);
+        }
+    </script>
+    <?php include("footer.php") ?>
 </body>
 
 </html>

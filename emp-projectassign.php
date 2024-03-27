@@ -1,5 +1,5 @@
 <!-- [ Session ] start -->
-    <?php include("session.php") ?>
+    <?php include("process/session.php") ?>
 <!-- [ Session ] end -->
 
 <?php
@@ -107,12 +107,13 @@ $result1 = mysqli_query($conn, $sql1);
                                                     <thead>
                                                         <tr>
                                                             <th align = "center">No.</th>
-                                                            <th align = "center">Task Name</th>
+                                                            <th align = "center">Task Details / Description</th>
                                                             <th align = "center">Start Date</th>
                                                             <th align = "center">Due Date</th>
                                                             <th align = "center">Submited Date</th>
+                                                            <th align = "center">Submited Note</th>
                                                             <th align = "center">Image</th>
-                                                            <th align = "center">Assign By</th>
+                                                            <th align = "center">Assigned By</th>
                                                             <th align = "center">Status</th>
                                                             <th align = "center">Option</th>
 
@@ -125,11 +126,12 @@ $result1 = mysqli_query($conn, $sql1);
                                                                 $counter;
                                                                 echo "<tr>";
                                                                 echo "<td>".$counter++."</td>";
-                                                                echo "<td>".$users['pname']."</td>";
+                                                                echo "<td class='text-wrap width-400'>".$users['pname']."</td>";
                                                                 echo "<td>".$users['startdate']."</td>";
                                                                 echo "<td>".$users['duedate']."</td>";
                                                                 echo "<td>".$users['subdate']."</td>";
-                                                                echo "<td><a class='example-image-link' href='Upload/proof/".$users[proof_img]."' data-lightbox='example-1'><img class='example-image' width='50px' heigh='50px' src='Upload/proof/".$users[proof_img]."'></a></td>";
+                                                                echo "<td>".$users['proof_info']."</td>";
+                                                                echo "<td><a class='example-image-link' href='Upload/proof/".$users['proof_img']."' data-lightbox='example-1'><img class='example-image' width='50px' heigh='50px' src='Upload/proof/".$users['proof_img']."'></a></td>";
                                                                 $qry = mysqli_query($conn, "select * from tbl_users where u_id ='".$users['assige_by']."'");
                                                                 $rs = mysqli_fetch_assoc($qry);
                                                                 echo "<td>".$rs['u_name']."</td>";
@@ -137,11 +139,17 @@ $result1 = mysqli_query($conn, $sql1);
                                                                     if($users['status']=='Due'){
                                                                         echo "<td style='color:red;'>".$users['status']."</td>";
 
-                                                                        echo "<td><a class='btn btn-sm btn-primary' href=\"test.php?pid=$users[pid]&uid=$users[u_id]\"><i class='feather icon-thumbs-up'></i>Submit</a><a class='btn btn-sm btn-secondary' href=\"fillprojectassign.php?pid=$users[pid]&uid=$users[u_id]\"><i class='feather icon-info'></i>Edit</a></td>";
+                                                                        echo "<td><a class='btn btn-sm btn-primary' href=\"test.php?pid=$users[pid]&uid=$users[u_id]\"><i class='feather icon-thumbs-up'></i>Submit</a>";
+																		if($users['assige_by'] == $_SESSION['id']){
+																		echo "<a class='btn btn-sm btn-secondary' href=\"fillprojectassign.php?pid=$users[pid]&uid=$users[u_id]\"><i class='feather icon-info'></i>Review</a></td>";
+																		}
                                                                     }else{
                                                                         echo "<td style='color:green;'>".$users['status']."</td>";
 
-                                                                        echo "<td><a style='pointer-events:none;' class='btn btn-sm btn-primary' href=\"test.php?pid=$users[pid]&uid=$users[u_id]\"><i class='feather icon-thumbs-up'></i>Submit</a><a class='btn btn-sm btn-secondary' href=\"fillprojectassign.php?pid=$users[pid]&uid=$users[u_id]\"><i class='feather icon-info'></i>Edit</a></td>";
+                                                                        echo "<td><a style='pointer-events:none;' class='btn btn-sm btn-primary' href=\"test.php?pid=$users[pid]&uid=$users[u_id]\"><i class='feather icon-thumbs-up'></i>Submit</a>";
+																		if($users['assige_by'] == $_SESSION['id']){
+																		echo "<a class='btn btn-sm btn-secondary' href=\"fillprojectassign.php?pid=$users[pid]&uid=$users[u_id]\"><i class='feather icon-info'></i>Review</a></td>";
+																		}
                                                                     }
 
                                                                 }
@@ -165,12 +173,9 @@ $result1 = mysqli_query($conn, $sql1);
                                                                     echo "None";
                                                                 }
 
-
-
                                                                 echo "</tr>";
                                                             }
                                                         ?>
-
                                                     </tbody>
                                                 </table>
                                             </div>

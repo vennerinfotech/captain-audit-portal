@@ -1,17 +1,15 @@
 <!-- [ Session ] start -->
-    <?php include("session.php") ?>
-<!-- [ Session ] end -->
+<?php
 
-<?php 
-    $id = $_SESSION['id'];
-    require_once ('process/dbh.php');
-    if($_SESSION['role']=="Employee"){
-        $sql1 = "SELECT * FROM `tbl_users` where u_role='Store' or u_role='Employee' or u_role='Sub Employee'";
-    }
-    else
-    {
-        $sql1 = "SELECT * FROM `tbl_users` where u_role='Store' or u_role='Sub Employee'";
-    }
+include("process/session.php");
+require_once('process/dbh.php');
+
+$id = $_SESSION['id'];
+if ($_SESSION['role'] == "Employee") {
+    $sql1 = "SELECT * FROM `tbl_users` where u_role='Store' or u_role='Employee' or u_role='Sub Employee'";
+} else {
+    $sql1 = "SELECT * FROM `tbl_users` where u_role='Store' or u_role='Sub Employee'";
+}
 
 
 //echo "$sql";
@@ -34,8 +32,7 @@ $result1 = mysqli_query($conn, $sql1);
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Captain Audit Portal is specially designed for management of any brand easily. Here you can track all processes of your business. Captain Audit Portal is product of THE BRAND LANDMARK" />
-    <meta name="keywords"
-        content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
+    <meta name="keywords" content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
     <meta name="author" content="The Brand Landmark" />
 
     <!-- Favicon icon -->
@@ -66,7 +63,7 @@ $result1 = mysqli_query($conn, $sql1);
     <!-- [ Header ] start -->
     <?php include("header.php") ?>
     <!-- [ Header ] end -->
-    
+
     <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
@@ -101,42 +98,42 @@ $result1 = mysqli_query($conn, $sql1);
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <form action="process/assignnewproject.php" method="POST" enctype="multipart/form-data">
-                                                    <div class="row">
-                                                        <div class="form-group col-md-12">
-                                                            <label>Employee/Store Name</label>
-                                                            <select class="form-control" multiple="multiple"  id="Username" name="username[]" required>
-                                                                <?php
+                                                        <div class="row">
+                                                            <div class="form-group col-md-12">
+                                                                <label>Employee/Store Name</label>
+                                                                <select class="form-control" multiple="multiple" id="Username" name="username[]" required>
+                                                                    <?php
                                                                     while ($users = mysqli_fetch_assoc($result1)) {
-                                                                        echo "<option value='$users[u_id]'>".$users['u_name']."</option>";
+                                                                        echo "<option value='$users[u_id]'>" . $users['u_name'] . "</option>";
                                                                     }
-                                                                ?>
-                                                            </select>
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                                <label>Task Name</label>
+                                                                <input type="text" class="form-control" id="Projectname" name="projectname" placeholder="Enter Task Name" required>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label>Start Date</label>
+                                                                <input type="Date" class="form-control" id="Startdate" name="startdate" placeholder="Start Date">
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label>Due Date</label>
+                                                                <input type="Date" class="form-control" id="Enddate" name="enddate" placeholder="Due Date">
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label>Priority</label>
+                                                                <select class="form-control" id="Projectpririty" name="projetpriority" required>
+                                                                    <option disabled="disabled" selected="selected">Default...</option>
+                                                                    <option value="High">High</option>
+                                                                    <option value="Medium">Medium</option>
+                                                                    <option value="Low">Low</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                                <button type="submit" name="" class="btn btn-primary">Submit</button>
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Task Name</label>
-                                                            <input type="text" class="form-control" id="Projectname" name="projectname" placeholder="Enter Task Name" required>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Start Date</label>
-                                                            <input type="Date" class="form-control" id="Startdate" name="startdate" placeholder="Start Date">
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Due Date</label>
-                                                            <input type="Date" class="form-control" id="Enddate" name="enddate" placeholder="Due Date">
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Priority</label>
-                                                            <select class="form-control" id="Projectpririty" name="projetpriority" required>
-                                                                <option disabled="disabled" selected="selected">Default...</option>
-                                                                <option value="High">High</option>
-                                                                <option value="Medium">Medium</option>
-                                                                <option value="Low">Low</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <button type="submit" name="" class="btn btn-primary">Submit</button>
-                                                        </div>
-                                                    </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -152,28 +149,28 @@ $result1 = mysqli_query($conn, $sql1);
             </div>
         </div>
     </div>
-    
+
     <!-- Required Js -->
-    <?php include_once('process/script.php');?>
-    <link  href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet"/>
+    <?php include_once('process/script.php'); ?>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet" />
 
     <script>
         $("#Username").chosen();
     </script>
 
-    <?php if(isset($_SESSION['status']) && $_SESSION['status'] != ''){?>
-    <script>
-        swal({
-          /*title: "Good job!",*/
-          text: "<?php echo $_SESSION['status'];?>",
-          icon: "<?php echo $_SESSION['status_code'];?>",
-          button: "Ok",
-        });
-    </script>
+    <?php if (isset($_SESSION['status']) && $_SESSION['status'] != '') { ?>
+        <script>
+            swal({
+                /*title: "Good job!",*/
+                text: "<?php echo $_SESSION['status']; ?>",
+                icon: "<?php echo $_SESSION['status_code']; ?>",
+                button: "Ok",
+            });
+        </script>
     <?php
-    unset($_SESSION['status'],$_SESSION['status_code']);
-}?>
-<?php include("footer.php") ?>
+        unset($_SESSION['status'], $_SESSION['status_code']);
+    } ?>
+    <?php include("footer.php") ?>
 </body>
 
 </html>

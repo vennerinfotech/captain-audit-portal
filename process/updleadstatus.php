@@ -1,6 +1,6 @@
 <?php
-include "../process/dbh.php";
-require_once ('../session.php');
+include "dbh.php";
+require_once ('session.php');
   
   if(isset($_POST['status']) && isset($_POST['id']))
   {

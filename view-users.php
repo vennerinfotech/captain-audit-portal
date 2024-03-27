@@ -1,13 +1,13 @@
 <!-- [ Session ] start -->
-    <?php include("session.php") ?>
-<!-- [ Session ] end -->
 <?php
-
-require_once ('process/dbh.php');
+include("process/session.php");
+require_once('process/dbh.php');
 error_reporting(0);
-$sql = "SELECT * from `tbl_users` ORDER BY u_id DESC";
-
-//echo "$sql";
+if($_SESSION['role'] == "Employee"){
+	$sql = "SELECT * from `tbl_users` where `u_role`='Staff' or `u_role`='Branchowner' ORDER BY u_id DESC";
+}else{
+	$sql = "SELECT * from `tbl_users` ORDER BY u_id DESC";
+}
 $result = mysqli_query($conn, $sql);
 
 ?>
@@ -28,8 +28,7 @@ $result = mysqli_query($conn, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Captain Audit Portal is specially designed for management of any brand easily. Here you can track all processes of your business. Captain Audit Portal is product of THE BRAND LANDMARK" />
-    <meta name="keywords"
-        content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
+    <meta name="keywords" content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
     <meta name="author" content="The Brand Landmark" />
 
     <!-- Favicon icon -->
@@ -39,7 +38,7 @@ $result = mysqli_query($conn, $sql);
     <!-- animation css -->
     <link rel="stylesheet" href="assets/plugins/animation/css/animate.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" href="lightbox/css/lightbox.min.css">
+    <link rel="stylesheet" href="lightbox/css/lightbox.min.css">
     <!-- vendor css -->
     <link rel="stylesheet" href="assets/css/style.css">
 
@@ -113,34 +112,38 @@ $result = mysqli_query($conn, $sql);
                                                             <th>User Role</th>
                                                             <th style='display:none;'>Salary</th>
                                                             <th>Joining/Opening Date</th>
+                                                            <?php if ($_SESSION['role'] == "Admin"  || $_SESSION['role'] == "Company"){ ?>
                                                             <th>Edit</th>
                                                             <th>Delete</th>
+                                                            <?php } ?>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
 
                                                         <?php
                                                         $counter = 1;
-                                                            while ($users = mysqli_fetch_assoc($result)) {
-                                                                $counter;
-                                                                echo "<tr>";
-                                                                echo "<td>".$counter++."</td>";
-                                                                echo "<td style='display:none;'>".$users['u_id']."</td>";
-                                                                echo "<td><a class='example-image-link' href='process/".$users['u_pic']."' data-lightbox='example-1'><img class='example-image' src='process/".$users['u_pic']."' height = 60px width = 60px></a></td>";
-                                                                echo "<td>".$users['u_name']."</td>";
-                                                                echo "<td style='display:none;'>".$users['u_address']."</td>";
-                                                                echo "<td>".$users['u_email']."</td>";
-                                                                echo "<td>".$users['u_password']."</td>";
-                                                                echo "<td>".$users['u_gender']."</td>";
-                                                                echo "<td style='display:none;'>".$users['u_birthday']."</td>";
-                                                                echo "<td>".$users['u_contact']."</td>";
-                                                                echo "<td>".$users['u_officeno']."</td>";
-                                                                echo "<td>".$users['u_role']."</td>";
-                                                                echo "<td style='display:none;'>".$users['u_salary']."</td>";
-                                                                echo "<td>".$users['u_joindate']."</td>";
-                                                                echo "<td><a class='btn btn btn-sm btn-primary' href=\"edit-user.php?id=$users[u_id]\">Edit</a></td>";
-                                                                echo "<td><a class='btn btn btn-sm btn-danger' href=\"delete-user.php?id=$users[u_id]\">Delete</a></td>";
+                                                        while ($users = mysqli_fetch_assoc($result)) {
+                                                            $counter;
+                                                            echo "<tr>";
+                                                            echo "<td>" . $counter++ . "</td>";
+                                                            echo "<td style='display:none;'>" . $users['u_id'] . "</td>";
+                                                            echo "<td><a class='example-image-link' href='process/" . $users['u_pic'] . "' data-lightbox='example-1'><img class='example-image' src='process/" . $users['u_pic'] . "' height = 60px width = 60px></a></td>";
+                                                            echo "<td>" . $users['u_name'] . "</td>";
+                                                            echo "<td style='display:none;'>" . $users['u_address'] . "</td>";
+                                                            echo "<td>" . $users['u_email'] . "</td>";
+                                                            echo "<td>" . $users['u_password'] . "</td>";
+                                                            echo "<td>" . $users['u_gender'] . "</td>";
+                                                            echo "<td style='display:none;'>" . $users['u_birthday'] . "</td>";
+                                                            echo "<td>" . $users['u_contact'] . "</td>";
+                                                            echo "<td>" . $users['u_officeno'] . "</td>";
+                                                            echo "<td>" . $users['u_role'] . "</td>";
+                                                            echo "<td style='display:none;'>" . $users['u_salary'] . "</td>";
+                                                            echo "<td>" . $users['u_joindate'] . "</td>";
+                                                            if($_SESSION['role'] == "Admin"  || $_SESSION['role'] == "Company"){
+                                                            echo "<td><a class='btn btn btn-sm btn-primary' href=\"edit-user.php?id=$users[u_id]\">Edit</a></td>";
+                                                            echo "<td><a class='btn btn btn-sm btn-danger' href=\"delete-user.php?id=$users[u_id]\">Delete</a></td>";
                                                             }
+                                                        }
                                                         ?>
                                                     </tbody>
                                                 </table>
@@ -160,22 +163,23 @@ $result = mysqli_query($conn, $sql);
     </div>
 
     <!-- Required Js -->
-	<script src="lightbox/js/lightbox-plus-jquery.min.js"></script>
+    <script src="lightbox/js/lightbox-plus-jquery.min.js"></script>
     <?php include("process/script.php") ?>
-	
-    <?php if(isset($_SESSION['status']) && $_SESSION['status'] != ''){?>
-    <script>
-        swal({
-          /*title: "Good job!",*/
-          text: "<?php echo $_SESSION['status'];?>",
-          icon: "<?php echo $_SESSION['status_code'];?>",
-          button: "Ok",
-        });
-    </script>
+
+    <?php if (isset($_SESSION['status']) && $_SESSION['status'] != '') { ?>
+        <script>
+            swal({
+                /*title: "Good job!",*/
+                text: "<?php echo $_SESSION['status']; ?>",
+                icon: "<?php echo $_SESSION['status_code']; ?>",
+                button: "Ok",
+            });
+        </script>
     <?php
-        unset($_SESSION['status'],$_SESSION['status_code']);
-    }?>
+        unset($_SESSION['status'], $_SESSION['status_code']);
+    } ?>
     <?php include("footer.php") ?>
 </body>
+
 </html>
 <!-- <a class='btn btn-sm btn-info' href=\"edit-user.php?id=$users[u_id]\">Edit</a> -->

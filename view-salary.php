@@ -2,7 +2,7 @@
 <?php 
 
     include 'process/dbh.php';
-    include("session.php");
+    include("process/session.php");
 
     $result = mysqli_query($conn,"SELECT  * FROM tbl_salary ORDER BY s_id DESC ") or die(mysqli_error($conn));
         
@@ -86,7 +86,7 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>View Royalty</h5>
+                                            <h5>View Salary</h5>
                                              <!-- <div style="float: right;">
                                                 <a class='btn btn-sm btn-danger' href="PDF/Viewroyalty.php"><i class='feather icon-check-circle'> PDF</i></a>
                                                 <a class='btn btn-sm btn-success' href="Excel/Viewroyalty.php"><i class='feather icon-check-circle'> EXCEL</i></a>
@@ -107,7 +107,7 @@
                                                             <th>Total Worked Days</th>
                                                             <th>Gross Salary Amount</th>
                                                             <th>Adjustment Amount</th>
-                                                            <th>Insentive Amount</th>
+                                                            <th>Incentive Amount</th>
                                                             <th>Total Payable Amount</th>
                                                             <th>Payment Method</th>
                                                             <th>EDIT</th>

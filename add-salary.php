@@ -1,6 +1,6 @@
 <!-- [ Session ] start -->
 <?php 
-    include("session.php"); 
+    include("process/session.php"); 
     include("process/dbh.php");
     
 ?>
@@ -100,7 +100,7 @@
                                                         <div class="form-group col-md-12">
                                                             <div class="row">
                                                                 <div class="form-group col-md-4">
-                                                                    <label>Employees Name</label>
+                                                                    <label>Employee Name</label>
                                                                     <select class="form-control" id="sel_depart" name="sel_depart">
                                                                         <option default value="0">- Select -</option>
                                                                         <?php
@@ -145,7 +145,7 @@
                                                                     <input type="text" class="form-control" id="adjustment" name="adjustment" oninput="adjamount()" placeholder="Adjustment Amount" required>
                                                                 </div>
                                                                 <div class="form-group col-md-3">
-                                                                    <label>Insentive</label>
+                                                                    <label>Incentive</label>
                                                                     <input type="text" class="form-control" id="insentive" name="insentive" oninput="insamount()" placeholder="Insentive" required>
                                                                 </div>
                                                                 <div class="form-group col-md-3">
@@ -154,7 +154,7 @@
                                                                 </div>
                                                                 <div class="form-group col-md-3">
                                                                     <label>Payment Method</label>
-                                                                    <input type="text" class="form-control" id="pmethod" name="pmethod" placeholder="Cash/NEFT/Chaque No." required>
+                                                                    <input type="text" class="form-control" id="pmethod" name="pmethod" placeholder="Cash/NEFT/Cheque No." required>
                                                                 </div>
                                                             </div>
                                                         </div>

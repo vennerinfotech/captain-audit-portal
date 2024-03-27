@@ -1,6 +1,6 @@
 <?php
 	require_once ('process/dbh.php');
-	require_once ('session.php');
+	require_once ('process/session.php');
 	//$id = (isset($_GET['id']) ? $_GET['id'] : '');
 	$pid = $_GET['pid'];
 	$id = $_GET['uid'];

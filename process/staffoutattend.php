@@ -1,6 +1,6 @@
 <?php 
     require_once ('dbh.php');
-    require_once ('../session.php'); 
+    require_once ('session.php'); 
 
     $img = $_POST['image'];
     $folderPath = "../Upload/eveningself/";

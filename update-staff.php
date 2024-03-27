@@ -1,6 +1,25 @@
 <!-- [ Session ] start -->
-<?php include 'process/dbh.php'; ?>
-    <?php include("session.php") ?>
+<?php
+include 'process/dbh.php';
+include("process/session.php");
+
+if (isset($_GET["edit"])) {
+    $result = mysqli_query($conn, "select * from tbl_staff where ustaff_id='" . $_GET["edit"] . "'");
+    $row = mysqli_fetch_assoc($result);
+    $staffId =  $row['ustaff_id'];
+    $addedBy =  $row['u_id'];
+    $staffName =  $row['staffame'];
+    $staffAddress =  $row['staff_address'];
+    $staffJoindate =  $row['st_joiningdate'];
+    $staffSalary =  $row['st_salary'];
+    $staffPosition =  $row['st_position'];
+    $stafEmail =  $row['email_id'];
+    $staffPassword =  $row['password'];
+    $staffContact =  $row['contact'];
+    $staffStatus =  $row['status'];
+    $staffReson =  $row['reson'];
+}
+?>
 <!-- [ Session ] end -->
 <!DOCTYPE html>
 <html lang="en">
@@ -19,8 +38,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Captain Audit Portal is specially designed for management of any brand easily. Here you can track all processes of your business. Captain Audit Portal is product of THE BRAND LANDMARK" />
-    <meta name="keywords"
-        content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
+    <meta name="keywords" content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
     <meta name="author" content="The Brand Landmark" />
 
     <!-- Favicon icon -->
@@ -51,7 +69,7 @@
     <!-- [ Header ] start -->
     <?php include("header.php") ?>
     <!-- [ Header ] end -->
-    
+
     <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
@@ -83,65 +101,81 @@
                                 <div class="col-sm-12">
                                     <div class="card">
                                         <div class="card-header">
-                                           <!-- <h5>Basic Componant</h5> -->
+                                            <!-- <h5>Basic Componant</h5> -->
                                         </div>
                                         <div class="card-body">
                                             <h5>Update Staff</h5>
                                             <div class="text-right m-3">
-                                             <button onclick="window.location='view-staff.php';" type="button" class="btn btn-sm btn-primary">View Staff</button>
-                                         </div>
-                                            <hr>
-
-                                           
-                                            <div class="row">
-                                               <div class="col-md-12">
-
-
-
-                                                  
-                                         <?php
-                            if(isset($_GET["edit"]))
-                            {
-                               $res=mysqli_query($conn,"select * from tbl_staff where ustaff_id='".$_GET["edit"]."'");     
-                                while($row=mysqli_fetch_assoc($res))
-                                {
-                                    ?>
-
-                                                    <form method="POST" action="process/updatestaff.php?edit=<?php echo $_GET["edit"]; ?>">
-                                                <input type="hidden" name="hfadminid" value="<?php echo $row["ustaff_id"]; ?>">
-                                                        <div class="form-group col-md-12">
-                                                            <label for="exampleInputPassword1">Staff Name</label>
-                                                            <input type="text" class="form-control" name="username1" id="username1" placeholder="Enter name"  value="<?php echo $row["staffame"]; ?>">
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label for="exampleInputPassword1">Address</label>
-                                                            <input type="text" class="form-control" name="txtadd" id="txtadd" placeholder="Enter AddressLine"  value="<?php echo $row["staff_address"]; ?>">
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <div class="row">
-
-                                                        <div class="form-group col-md-6">
-                                                            <label>Email address</label>
-                                                            <input type="text" class="form-control" name="email" id="email" placeholder="Enter email"  value="<?php echo $row["email_id"]; ?>">
-
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label for="exampleInputPassword1">Contact</label>
-                                                            <input type="number" class="form-control" name="txtcon" name="username" id="txtcon" placeholder="Enter Phone Number"  value="<?php echo $row["contact"]; ?>">
-                                                        </div>
-                                                    </div>
-                                                        </div>
-                                                     
-                                                                 <button id="btnupdate" type="submit" name="btnupdate" class="btn btn-primary">Submit</button>
-                                                        
-                                                    </form>
-                                                
-                                                 <?php  }
-        
-                                        }
-
-                                     ?>       
+                                                <button onclick="window.location='view-staff.php';" type="button" class="btn btn-sm btn-primary">View Staff</button>
                                             </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <form method="POST" action="process/updatestaff.php?edit=<?php echo $_GET["edit"]; ?>">
+                                                        <div class="row">
+                                                            <div class="form-group col-md-4">
+                                                                <label for="exampleInputPassword1">Staff Name</label>
+                                                                <input type="text" class="form-control" name="staffName" id="staffName" placeholder="Enter name" value="<?php echo $staffName; ?>" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <?php
+                                                                if ($_SESSION['role'] != "Store") {
+                                                                    echo "<label for='exampleInputPassword1'>Select Store</label>";
+                                                                    echo "<select class='form-control' name='storeid' required>";
+                                                                    $sql_department = "SELECT * FROM tbl_users where u_role='Store'";
+                                                                    $department_data = mysqli_query($conn, $sql_department);
+                                                                    while ($row = mysqli_fetch_assoc($department_data)) {
+                                                                        $departid = $row['u_id'];
+                                                                        $depart_name = $row['u_name'];
+                                                                        $selected = ($departid == $addedBy) ? "Selected" : "";
+                                                                        echo "<option value='" . $departid . "' ".$selected."> " . $depart_name . "</option>";
+                                                                    }
+                                                                    echo "</select>";
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="exampleInputPassword1">Address</label>
+                                                                <input type="text" class="form-control" name="staffAddress" id="staffAddress" placeholder="Enter AddressLine" value="<?= $staffAddress; ?>" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="exampleInputPassword1">Joining Date</label>
+                                                                <input type="date" class="form-control" name="joiningDate" id="joiningDate" placeholder="Enter Date" value="<?= $staffJoindate; ?>" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="my-input">Position</label>
+                                                                <div class="form-group">
+                                                                    <select class="form-control" name="staffPostion" id="staffPostion" required>
+                                                                        <option value="Store Manager" <?= ($staffPosition =="Store Manager") ? "selected" : ""; ?>>Store Manager</option>
+                                                                        <option value="Store In-charge" <?= ($staffPosition =="Store In-charge") ? "selected" : ""; ?>>Store In-charge</option>
+                                                                        <option value="Kitchen Chef" <?= ($staffPosition =="Kitchen Chef") ? "selected" : ""; ?>>Kitchen Chef</option>
+                                                                        <option value="Kitchen In-charge" <?= ($staffPosition =="Kitchen In-charge") ? "selected" : ""; ?>>Kitchen In-charge</option>
+                                                                        <option value="Service Champion" <?= ($staffPosition =="Service Champion") ? "selected" : ""; ?>>Service Champion</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="exampleInputPassword1">Salary</label>
+                                                                <input type="text" class="form-control" name="staffSalary" id="staffSalary" placeholder="Enter Salary" value="<?= $staffSalary; ?>" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label>Email address</label>
+                                                                <input type="email" class="form-control" name="staffEmail" id="staffEmail" placeholder="Enter email" value="<?= $stafEmail; ?>" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label>Password</label>
+                                                                <input type="text" class="form-control" name="staffPassword" id="staffPassword" placeholder="Enter Password"  value="<?= $staffPassword; ?>" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="exampleInputPassword1">Contact</label>
+                                                                <input type="number" class="form-control" name="staffPhone" id="staffPhone" placeholder="Enter Phone Number" value="<?= $staffContact; ?>" required>
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                                <button id="btnupdate" type="submit" name="btnupdate" class="btn btn-primary">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -155,22 +189,22 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Required Js -->
     <?php include("process/script.php") ?>
-    <?php if(isset($_SESSION['status']) && $_SESSION['status'] != ''){?>
-    <script>
-        swal({
-          /*title: "Good job!",*/
-          text: "<?php echo $_SESSION['status'];?>",
-          icon: "<?php echo $_SESSION['status_code'];?>",
-          button: "Ok",
-        });
-    </script>
+    <?php if (isset($_SESSION['status']) && $_SESSION['status'] != '') { ?>
+        <script>
+            swal({
+                /*title: "Good job!",*/
+                text: "<?php echo $_SESSION['status']; ?>",
+                icon: "<?php echo $_SESSION['status_code']; ?>",
+                button: "Ok",
+            });
+        </script>
     <?php
-        unset($_SESSION['status'],$_SESSION['status_code']);
-    }?>
-<?php include("footer.php") ?>
+        unset($_SESSION['status'], $_SESSION['status_code']);
+    } ?>
+    <?php include("footer.php") ?>
 </body>
 
 </html>

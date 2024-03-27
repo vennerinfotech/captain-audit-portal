@@ -1,6 +1,6 @@
 <!-- [ Session ] start -->
 <?php include 'process/dbh.php'; ?>
-    <?php include("session.php") ?>
+<?php include("process/session.php") ?>
 <!-- [ Session ] end -->
 <!DOCTYPE html>
 <html lang="en">
@@ -19,8 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Captain Audit Portal is specially designed for management of any brand easily. Here you can track all processes of your business. Captain Audit Portal is product of THE BRAND LANDMARK" />
-    <meta name="keywords"
-        content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
+    <meta name="keywords" content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
     <meta name="author" content="The Brand Landmark" />
 
     <!-- Favicon icon -->
@@ -82,76 +81,78 @@
                                 <!-- [ form-element ] start -->
                                 <div class="col-sm-12">
                                     <div class="card">
-                                        <div class="card-header">
-                                           <!-- <h5>Basic Componant</h5> -->
-                                        </div>
                                         <div class="card-body">
                                             <h5>Add Staff</h5>
                                             <div class="text-right m-3">
-                                            <!--  <button onclick="window.location='view-staff.php';" type="button" class="btn btn-sm btn-primary">View Staff</button> -->
-                                         </div>
+                                                <!--  <button onclick="window.location='view-staff.php';" type="button" class="btn btn-sm btn-primary">View Staff</button> -->
+                                            </div>
                                             <hr>
-
-
                                             <div class="row">
-                                               <div class="col-md-12">
-
-
-
-
+                                                <div class="col-md-12">
                                                     <form method="POST" action="process/addstaff.php">
-                                                        <div class="form-group col-md-12">
-                                                            <?php 
-                                                                if($_SESSION['role']!="Store"){
+                                                        <div class="row">
+                                                            <div class="form-group col-md-4">
+                                                                <label for="exampleInputPassword1">Staff Name</label>
+                                                                <input type="text" class="form-control" name="staffName" id="staffName" placeholder="Enter name" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <?php
+                                                                if ($_SESSION['role'] != "Store") {
                                                                     echo "<label for='exampleInputPassword1'>Select Store</label>";
                                                                     echo "<select class='form-control' name='storeid' required>";
-                                                                    echo "<option value=''>- Select -</option>";
-                                                                        $sql_department = "SELECT * FROM tbl_users where u_role='Store'";
-                                                                        $department_data = mysqli_query($conn,$sql_department);
-                                                                        while($row = mysqli_fetch_assoc($department_data) ){
-                                                                            $departid = $row['u_id'];
-                                                                            $depart_name = $row['u_name'];
-                                                                            echo "<option value='".$departid."' >".$depart_name."</option>";
-                                                                        }
-                                                                    echo "</select>";
-
+                                                                    $sql_department = "SELECT * FROM tbl_users where u_role='Store'";
+                                                                    $department_data = mysqli_query($conn, $sql_department);
+                                                                    while ($row = mysqli_fetch_assoc($department_data)) {
+                                                                        $departid = $row['u_id'];
+                                                                        $depart_name = $row['u_name'];
+                                                                        echo "<option value='" . $departid . "' >" . $depart_name . "</option>";
                                                                     }
+                                                                    echo "</select>";
+                                                                }
                                                                 ?>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label for="exampleInputPassword1">Staff Name</label>
-                                                            <input type="text" class="form-control" name="username1" id="username" placeholder="Enter name" required>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label for="exampleInputPassword1">Address</label>
-                                                            <input type="text" class="form-control" name="txtadd" id="username" placeholder="Enter AddressLine" required>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <div class="row">
-
-                                                        <div class="form-group col-md-6">
-                                                            <label>Email address</label>
-                                                            <input type="email" class="form-control" name="mail" id="email" placeholder="Enter email">
-
-                                                        </div>
-																<div class="form-group col-md-6">
-                                                                    <label>Password</label>
-                                                                    <input type="text" class="form-control" name="password" id="password" placeholder="Enter Password">
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="exampleInputPassword1">Address</label>
+                                                                <input type="text" class="form-control" name="staffAddress" id="staffAddress" placeholder="Enter AddressLine" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="exampleInputPassword1">Joining Date</label>
+                                                                <input type="date" class="form-control" name="joiningDate" id="joiningDate" placeholder="Enter Date" value="<?= date('Y-m-d'); ?>" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="my-input">Position</label>
+                                                                <div class="form-group">
+                                                                    <select class="form-control" name="staffPostion" id="staffPostion" required>
+                                                                        <option value="Store Manager" selected>Store Manager</option>
+                                                                        <option value="Store In-charge">Store In-charge</option>
+                                                                        <option value="Kitchen Chef">Kitchen Chef</option>
+                                                                        <option value="Kitchen In-charge">Kitchen In-charge</option>
+                                                                        <option value="Service Champion">Service Champion</option>
+                                                                    </select>
                                                                 </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label for="exampleInputPassword1">Contact</label>
-                                                            <input type="number" class="form-control" name="txtcon" name="username" id="username" placeholder="Enter Phone Number" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="exampleInputPassword1">Salary</label>
+                                                                <input type="text" class="form-control" name="staffSalary" id="staffSalary" placeholder="Enter Salary" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label>Email address</label>
+                                                                <input type="email" class="form-control" name="staffEmail" id="staffEmail" placeholder="Enter email" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label>Password</label>
+                                                                <input type="text" class="form-control" name="staffPassword" id="staffPassword" placeholder="Enter Password" required>
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="exampleInputPassword1">Contact</label>
+                                                                <input type="number" class="form-control" name="staffPhone" id="staffPhone" placeholder="Enter Phone Number" required>
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                                <button id="btnadd" type="submit" name="btnadd" class="btn btn-primary">Submit</button>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                        </div>
-
-                                                                 <button id="btnadd" type="submit" name="btnadd" class="btn btn-primary">Submit</button>
-
                                                     </form>
-
-
-
-                                            </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -168,19 +169,19 @@
 
     <!-- Required Js -->
     <?php include("process/script.php") ?>
-     <?php if(isset($_SESSION['status']) && $_SESSION['status'] != ''){?>
-    <script>
-        swal({
-          /*title: "Good job!",*/
-          text: "<?php echo $_SESSION['status'];?>",
-          icon: "<?php echo $_SESSION['status_code'];?>",
-          button: "Ok",
-        });
-    </script>
+    <?php if (isset($_SESSION['status']) && $_SESSION['status'] != '') { ?>
+        <script>
+            swal({
+                /*title: "Good job!",*/
+                text: "<?php echo $_SESSION['status']; ?>",
+                icon: "<?php echo $_SESSION['status_code']; ?>",
+                button: "Ok",
+            });
+        </script>
     <?php
-        unset($_SESSION['status'],$_SESSION['status_code']);
-    }?>
-<?php include("footer.php") ?>
+        unset($_SESSION['status'], $_SESSION['status_code']);
+    } ?>
+    <?php include("footer.php") ?>
 </body>
 
 </html>

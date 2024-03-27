@@ -1,5 +1,5 @@
 <!-- [ Session ] start -->
-    <?php include("session.php") ?>
+    <?php include("process/session.php") ?>
 <!-- [ Session ] end -->
 <?php 
     $id = $_SESSION['id'];
@@ -101,16 +101,16 @@
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>Start Date</label>
-                                                            <input type="Date" class="form-control" id="Startdate" name="startdate" placeholder="Start Date">
+                                                            <input type="Date" class="form-control" id="Startdate" name="startdate" placeholder="Start Date" value="<?= date('Y-m-d'); ?>">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>Due Date</label>
-                                                            <input type="Date" class="form-control" id="Enddate" name="enddate" placeholder="Due Date">
+                                                            <input type="Date" class="form-control" id="Enddate" name="enddate" placeholder="Due Date" value="<?= date('Y-m-d'); ?>">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>Priority</label>
                                                             <select class="form-control" id="Projectpririty" name="projetpriority" required>
-                                                                <option disabled="disabled" selected="selected">Default...</option>
+                                                                <option disabled selected value="">Select task priority</option>
                                                                 <option value="High">High</option>
                                                                 <option value="Medium">Medium</option>
                                                                 <option value="Low">Low</option>

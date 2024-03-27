@@ -12,6 +12,7 @@ $html='<table>
 		<td>Submited Date</td>
 		<td>Total Days</td>
 		<td>Status</td>
+		<td>Note</td>
 	</tr>';
 	$counter=1;
 	$stmt = "SELECT * from `project`,`tbl_users` where  `project`.u_id = `tbl_users`.u_id order by subdate desc";
@@ -26,7 +27,7 @@ $html='<table>
             if($users['subdate']==""){
             	$dateDiff = '-';
             }else{
-            	$dateDiff =  round($diff / 86400);
+            	$dateDiff =  (round($diff / 86400) <= 0) ?  0 : round($diff / 86400);
             }
 		$html.='<tr>
 			<td>'.$counter++.'</td>
@@ -34,10 +35,17 @@ $html='<table>
 			<td>'.$users['pname'].'</td>
 			<td>'.$users['startdate'].'</td>
 			<td>'.$users['duedate'].'</td>
-			<td>'.$users['priority'].'</td>
-			<td>'.$users['subdate'].'</td>
-			<td>'.$dateDiff.'</td>
+			<td>'.$users['priority'].'</td>';
+			if($users['subdate'] == "" || $users['subdate'] == "0000-00-00 00:00:00"){
+                 $html.= "<td>".""."</td>";
+            }
+            else
+            {
+                $html.= "<td>".$users['subdate']."</td>";
+            }
+			$html.='<td>'.$dateDiff.'</td>
 			<td>'.$users['status'].'</td>
+			<td>'.$users['proof_info'].'</td>
 		</tr>';
 	}
 
@@ -46,5 +54,3 @@ header('Content-Type:application/xls');
 header('Content-Disposition:attachment;filename='.$file.'.xls');
 echo $html;
 ?>
-
-</table>

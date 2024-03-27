@@ -1,6 +1,8 @@
 <!-- [ Session ] start -->
-<?php include 'process/dbh.php';?>
-    <?php include("session.php") ?>
+<?php include ('process/dbh.php');?>
+<?php include ('process/session.php'); 
+    error_reporting(0);
+?>
 <!-- [ Session ] end -->
 <!DOCTYPE html>
 <html lang="en">
@@ -11,9 +13,9 @@
     <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 11]>
-    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    	<![endif]-->
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
     <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -50,8 +52,8 @@
 
     <!-- [ Header ] start -->
     <?php include("header.php") ?>
-    <!-- [ Header ] end --> 
-    
+    <!-- [ Header ] end -->
+
     <!-- [ Main Content ] start -->
     <section class="pcoded-main-container">
         <div class="pcoded-wrapper">
@@ -65,12 +67,11 @@
                                     <div class="row align-items-center">
                                         <div class="col-md-12">
                                             <div class="page-header-title">
-                                                <!-- <h5 class="m-b-10">Bootstrap Basic Tables</h5> -->
+                                               <!--  <h5 class="m-b-10">Bootstrap Basic Tables</h5> -->
                                             </div>
                                             <ul class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href=""><i class="feather icon-home"></i></a></li>
-                                                 <li class="breadcrumb-item"><a href="#!">Complain Management</a></li>
-                                                <li class="breadcrumb-item"><a href="view-complain.php">View Complain</a></li>
+                                                <li class="breadcrumb-item"><a href="#!">View Sale</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -85,11 +86,11 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>View Complain</h5>
-                                            <div style="float: right;">
-                                                <a class='btn btn-sm btn-danger' href="PDF/Viewcomplain.php"><i class='feather icon-check-circle'> PDF</i></a>
-                                                <a class='btn btn-sm btn-success' href="Excel/Viewcomplain.php"><i class='feather icon-check-circle'> EXCEL</i></a>
-                                            </div>
+                                            <h5>View Sale</h5>
+                                            <!-- <div style="float: right;">
+                                                <a class='btn btn-sm btn-danger' href="PDF/Viewexpense.php"><i class='feather icon-check-circle'> PDF</i></a>
+                                                <a class='btn btn-sm btn-success' href="Excel/Viewexpense.php"><i class='feather icon-check-circle'> EXCEL</i></a>
+                                            </div> -->
                                         </div>
                                         <div class="card-body table-border-style">
                                             <div class="table-responsive">
@@ -97,79 +98,38 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
-                                                            <th>Store Name</th>
-                                                            <th>Subject</th>
-                                                            <th>Purpose</th>
-                                                            <th>Status</th>
-                                                            <?php
-
-                                                            if($_SESSION['role']=='Admin')
-                                                            {
-                                                                echo "<th>Approval</th>"; 
-                                                            }
-                                                            else 
-                                                            {
-                                                               echo "<th style='display:none;'>Approval</th>"; 
-                                                            }
-
-                                                            ?>
+                                                            <th>Party Name</th>
+                                                            <th>Email-Id</th>
+                                                            <th>Phone No.</th>
+                                                            <th>City</th>
+                                                            <th>LOI Amount</th>
+                                                            <th>Mode of Payment</th>
+                                                            <th>Date Of LOI</th>
+                                                            <th>Image</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                <?php
-
+                                                          <?php
                                                 $count=1;
-                                                if($_SESSION['role']=="Admin")
-                                                {
-                                                    $result=mysqli_query($conn,"SELECT * FROM `tbl_complain`, `tbl_users` where `tbl_complain`.u_id = `tbl_users`.u_id") or die(mysqli_error($conn));
-                                                }
-                                                elseif ($_SESSION['role']=="Store") 
-                                                {
-                                                    $result=mysqli_query($conn,"SELECT * FROM `tbl_complain`, `tbl_users` where `tbl_complain`.u_id ='".$_SESSION['id']."'  AND `tbl_users`.u_id = '".$_SESSION['id']."'") or die(mysqli_error($conn));
-                                                }
-                                                else
-                                                {
-                                                    return;
-                                                }
-                                                
+                                                $result=mysqli_query($conn,"SELECT * FROM `tbl_sale`") or die(mysqli_error($conn));
                                                 while($row=mysqli_fetch_assoc($result))
                                                 {
                                                 ?>
 
+
                                                         <tr>
                                                             <td><?php echo $count;$count++; ?></td>
-                                                            <td><?php echo $row["u_name"]; ?></td>
-                                                            <td><?php echo $row["selectpur"]; ?></td>
-                                                            <td><?php echo $row["note"]; ?></td>
-                                                            <?php 
-                                                                if($row['status']=='Accepted'){?>
-                                                                    <td style="color:green;"><?php echo $row["status"]; ?></td>
-                                                                <?php }else{ ?>
-                                                                    <td style="color:red;"><?php echo $row["status"]; ?></td>
-                                                               <?php }
-                                                            ?>
-                                                            
-                                                            <?php
+                                                            <td><?php echo $row["name"]; ?></td>
+                                                            <td><?php echo $row["emailid"]; ?></td>
+                                                            <td><?php echo $row["phnno"]; ?></td>
+                                                            <td><?php echo $row["city"]; ?></td>
+                                                            <td><?php echo $row["lamount"]; ?></td>
+                                                            <td><?php echo $row["mpayment"]; ?></td>
+                                                            <td><?php echo $row["dateofloi"]; ?></td>
+                                                            <td>
+                                                                <a href="Upload/Sale/<?php echo $row['img']; ?>" target='blank'><img src="Upload/Sale/<?php echo $row["img"]; ?>" style="height: 50px; width: 50px;" /></a>
+                                                            </td>
 
-                                                            if($_SESSION['role']=='Admin')
-                                                            {
-                                                                if($row['status']=='Accepted'){
-                                                                    echo "<td><a style='pointer-events:none;' class='btn btn-sm btn-success' href=\"process/complainapprove.php?id=$row[u_id]&token=$row[com_id]\"><i class='feather icon-check-circle'></i>Accept</a></td>";
-                                                                }else{
-                                                                    echo "<td><a class='btn btn-sm btn-success' href=\"process/complainapprove.php?id=$row[u_id]&token=$row[com_id]\"><i class='feather icon-check-circle'></i>Accept</a></td>";
-                                                                }
-                                                                
-                                                            }
-                                                            else 
-                                                            {
-                                                                if($row['status']=='Accepted'){
-                                                                    echo "<td><a style='display:none;' class='btn btn-sm btn-success' href=\"process/complainapprove.php?id=$row[u_id]&token=$row[com_id]\"><i class='feather icon-check-circle'></i>Accept</a></td>";
-                                                                }else{
-                                                                    echo "<td><a style='display:none;' class='btn btn-sm btn-success' href=\"process/complainapprove.php?id=$row[u_id]&token=$row[com_id]\"><i class='feather icon-check-circle'></i>Accept</a></td>";
-                                                                }
-                                                            }  
-                                                            ?>
-                                                            
                                                         </tr>
                                                         <?php } ?>
                                                     </tbody>
@@ -180,7 +140,7 @@
                                 </div>
                                 <!-- [ basic-table ] end -->
                                 <!-- [ inverse-table ] start -->
-    
+
                                 <!-- [ Background-Utilities ] end -->
                             </div>
                             <!-- [ Main Content ] end -->
@@ -240,20 +200,7 @@
     <!-- Warning Section Ends -->
 
     <!-- Required Js -->
-   <?php include("process/script.php") ?>
-    <?php if(isset($_SESSION['status']) && $_SESSION['status'] != ''){?>
-    <script>
-        swal({
-          /*title: "Good job!",*/
-          text: "<?php echo $_SESSION['status'];?>",
-          icon: "<?php echo $_SESSION['status_code'];?>",
-          button: "Ok",
-        });
-    </script>
-    <?php
-        unset($_SESSION['status'],$_SESSION['status_code']);
-    }?>
+    <?php include("process/script.php") ?>
 <?php include("footer.php") ?>
 </body>
-
 </html>

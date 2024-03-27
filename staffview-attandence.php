@@ -1,6 +1,6 @@
 <!-- [ Session ] start -->
-<?php include 'session.php';?>
-    <?php include('process/dbh.php') ?>
+<?php include 'process/session.php'; ?>
+<?php include('process/dbh.php') ?>
 <!-- [ Session ] end -->
 <!DOCTYPE html>
 <html lang="en">
@@ -19,8 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Captain Audit Portal is specially designed for management of any brand easily. Here you can track all processes of your business. Captain Audit Portal is product of THE BRAND LANDMARK" />
-    <meta name="keywords"
-        content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
+    <meta name="keywords" content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
     <meta name="author" content="The Brand Landmark" />
 
     <!-- Favicon icon -->
@@ -30,7 +29,7 @@
     <!-- animation css -->
     <link rel="stylesheet" href="assets/plugins/animation/css/animate.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" href="lightbox/css/lightbox.min.css">
+    <link rel="stylesheet" href="lightbox/css/lightbox.min.css">
     <!-- vendor css -->
     <link rel="stylesheet" href="assets/css/style.css">
 
@@ -70,7 +69,7 @@
                                             <ul class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="userdashboard.php"><i class="feather icon-home"></i></a></li>
                                                 <li class="breadcrumb-item"><a href="#!">Attendance Management</a></li>
-                                                <li class="breadcrumb-item"><a href="view-attandence.php">View Attendance</a></li>
+                                                <li class="breadcrumb-item"><a href="#!">View Attendance</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -97,83 +96,83 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
-                                                            <?php if($_SESSION['role']=='Admin'){?>
-                                                            <th>Store Name</th>
-                                                            <th>Staff Name</th>
-                                                            <?php }else if($_SESSION['role']=='staff'){?>
-                                                            <th style="display:none;">Store Name</th>
-                                                            <th style="display:none;">Staff Name</th>   
-                                                            <?php }else{?>
-                                                            <th style="display:none;">Store Name</th>
-                                                            <th>Staff Name</th>
-                                                            <?php }?>
+                                                            <?php if ($_SESSION['role'] == 'Admin') { ?>
+                                                                <th>Store Name</th>
+                                                                <th>Staff Name</th>
+                                                            <?php } else if ($_SESSION['role'] == 'staff') { ?>
+                                                                <th style="display:none;">Store Name</th>
+                                                                <th style="display:none;">Staff Name</th>
+                                                            <?php } else { ?>
+                                                                <th style="display:none;">Store Name</th>
+                                                                <th>Staff Name</th>
+                                                            <?php } ?>
                                                             <th>Image</th>
                                                             <th>In-Date/Time</th>
                                                             <th>Image</th>
                                                             <th>Out-Date/Time</th>
                                                             <th>Working Hours</th>
-															<?php if($_SESSION['role']=='Admin'){?>
-                                                            <th>Action</th>
-                                                            <?php }?>
+                                                            <?php if ($_SESSION['role'] == 'Admin') { ?>
+                                                                <th>Action</th>
+                                                            <?php } ?>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                          <?php
-                                                $count=1;
-                                                if($_SESSION['role']=='Admin'){
-                                                    $result=mysqli_query($conn,"SELECT * FROM `tbl_ststaffattendence`, `tbl_users`, `tbl_staff`where `tbl_ststaffattendence`.store_id = `tbl_users`.u_id and `tbl_staff`.ustaff_id = `tbl_ststaffattendence`.staff_id") or die(mysqli_error($conn));
-                                                }
-                                                else if($_SESSION['role']=='staff'){
-                                                    $result=mysqli_query($conn,"SELECT * FROM `tbl_ststaffattendence`, `tbl_users`, `tbl_staff` where `tbl_ststaffattendence`.store_id = `tbl_users`.u_id and `tbl_users`.u_id='".$_SESSION['id']."' and `tbl_ststaffattendence`.store_id = '".$_SESSION['id']."' and tbl_staff.ustaff_id = tbl_ststaffattendence.staff_id and tbl_ststaffattendence.staff_id = '".$_SESSION['staffid']."'") or die(mysqli_error($conn));
-                                                }
-                                                else{
-                                                    $result=mysqli_query($conn,"SELECT * FROM `tbl_ststaffattendence`, `tbl_users`, `tbl_staff` where `tbl_ststaffattendence`.store_id = `tbl_users`.u_id and `tbl_users`.u_id='".$_SESSION['id']."' and `tbl_ststaffattendence`.store_id = '".$_SESSION['id']."' and tbl_staff.ustaff_id = tbl_ststaffattendence.staff_id") or die(mysqli_error($conn));
-                                                }
+                                                        <?php
+                                                        $count = 1;
+                                                        if ($_SESSION['role'] == 'Admin') {
+                                                            $result = mysqli_query($conn, "SELECT * FROM `tbl_ststaffattendence`, `tbl_users`, `tbl_staff`where `tbl_ststaffattendence`.store_id = `tbl_users`.u_id and `tbl_staff`.ustaff_id = `tbl_ststaffattendence`.staff_id") or die(mysqli_error($conn));
+                                                        } else if ($_SESSION['role'] == 'staff') {
+                                                            $result = mysqli_query($conn, "SELECT * FROM `tbl_ststaffattendence`, `tbl_users`, `tbl_staff` where `tbl_ststaffattendence`.store_id = `tbl_users`.u_id and `tbl_users`.u_id='" . $_SESSION['id'] . "' and `tbl_ststaffattendence`.store_id = '" . $_SESSION['id'] . "' and tbl_staff.ustaff_id = tbl_ststaffattendence.staff_id and tbl_ststaffattendence.staff_id = '" . $_SESSION['staffid'] . "'") or die(mysqli_error($conn));
+                                                        } else {
+                                                            $result = mysqli_query($conn, "SELECT * FROM `tbl_ststaffattendence`, `tbl_users`, `tbl_staff` where `tbl_ststaffattendence`.store_id = `tbl_users`.u_id and `tbl_users`.u_id='" . $_SESSION['id'] . "' and `tbl_ststaffattendence`.store_id = '" . $_SESSION['id'] . "' and tbl_staff.ustaff_id = tbl_ststaffattendence.staff_id") or die(mysqli_error($conn));
+                                                        }
 
-                                                while($row=mysqli_fetch_assoc($result))
-                                                {
-                                                ?>
-                                                <tr>
-                                                            <td><?php echo $count;$count++; ?></td>
-                                                            <?php if($_SESSION['role']=='Admin'){?>
-                                                            <td><?php echo $row["u_name"]; ?></td>
-                                                            <td><?php echo $row["staffame"]; ?></td>
-                                                            <?php }else if($_SESSION['role']=='staff'){?>
-                                                            <td style="display:none;"><?php echo $row["u_name"]; ?></td>
-                                                            <td style="display:none;"><?php echo $row["staffame"]; ?></td>
-                                                            <?php }else{?>
-                                                            <td style="display:none;"><?php echo $row["u_name"]; ?></td>
-                                                            <td ><?php echo $row["staffame"]; ?></td>
-                                                            <?php }?>
+                                                        while ($row = mysqli_fetch_assoc($result)) {
+                                                        ?>
+                                                            <tr>
+                                                                <td><?php echo $count;
+                                                                    $count++; ?></td>
+                                                                <?php if ($_SESSION['role'] == 'Admin') { ?>
+                                                                    <td><?php echo $row["u_name"]; ?></td>
+                                                                    <td><?php echo $row["staffame"]; ?></td>
+                                                                <?php } else if ($_SESSION['role'] == 'staff') { ?>
+                                                                    <td style="display:none;"><?php echo $row["u_name"]; ?></td>
+                                                                    <td style="display:none;"><?php echo $row["staffame"]; ?></td>
+                                                                <?php } else { ?>
+                                                                    <td style="display:none;"><?php echo $row["u_name"]; ?></td>
+                                                                    <td><?php echo $row["staffame"]; ?></td>
+                                                                <?php } ?>
 
-                                                            <td>
-                                                                <a class="example-image-link" href="Upload/staffateendence/<?php echo $row["cimage"]; ?>" data-lightbox="example-1"><img class="example-image" src="Upload/staffateendence/<?php echo $row["cimage"]; ?>" style="height: 50px; width: 50px;" /></a>
-                                                            </td>
-                                                            <td><?php echo $row["cdate"]; ?></td>
-                                                             <td>
-                                                            <a class="example-image-link" href="Upload/eveningself/<?php echo $row["uimage"]; ?>" data-lightbox="example-1"><img class="example-image" src="Upload/eveningself/<?php echo $row["uimage"]; ?>" style="height: 50px; width: 50px;" /></a>
-                                                            </td>
-                                                            <td><?php echo $row["udate"]; ?></td>
-                                                            <?php
-                                                            $date1 = $row["cdate"];
-                                                            $date2 = $row["udate"];?>
-                                                            <td>
-                                                            <?php
-                                                            if($row["udate"] == "")
-                                                                {echo "";}
-                                                            else{echo $hour = round((strtotime($date2) - strtotime($date1))/3600, 1);}
-                                                             ?>
-                                                            </td>
-                                                            <?php
-                                                            if($_SESSION['role']=='Admin'){?>
-													                                                            <td>
+                                                                <td>
+                                                                    <a class="example-image-link" href="Upload/staffateendence/<?php echo $row["cimage"]; ?>" data-lightbox="example-1"><img class="example-image" src="Upload/staffateendence/<?php echo $row["cimage"]; ?>" style="height: 50px; width: 50px;" /></a>
+                                                                </td>
+                                                                <td><?php echo $row["cdate"]; ?></td>
+                                                                <td>
+                                                                    <a class="example-image-link" href="Upload/eveningself/<?php echo $row["uimage"]; ?>" data-lightbox="example-1"><img class="example-image" src="Upload/eveningself/<?php echo $row["uimage"]; ?>" style="height: 50px; width: 50px;" /></a>
+                                                                </td>
+                                                                <td><?php echo $row["udate"]; ?></td>
+                                                                <?php
+                                                                $date1 = $row["cdate"];
+                                                                $date2 = $row["udate"]; ?>
+                                                                <td>
+                                                                    <?php
+                                                                    if ($row["udate"] == "") {
+                                                                        echo "";
+                                                                    } else {
+                                                                        echo $hour = round((strtotime($date2) - strtotime($date1)) / 3600, 1);
+                                                                    }
+                                                                    ?>
+                                                                </td>
+                                                                <?php
+                                                                if ($_SESSION['role'] == 'Admin') { ?>
+                                                                    <td>
 
-                                                            <button type="button" onclick="window.location='process/staffdelete-attandense.php?edit=<?php echo $row['storestaff_id']; ?>'" class="btn btn-sm btn-danger">Delete</button>
-																                                                            </td>
+                                                                        <button type="button" onclick="window.location='process/staffdelete-attandense.php?edit=<?php echo $row['storestaff_id']; ?>'" class="btn btn-sm btn-danger">Delete</button>
+                                                                    </td>
 
-                                                          <?php }?>
+                                                                <?php } ?>
 
-                                                        </tr>
+                                                            </tr>
                                                         <?php } ?>
                                                     </tbody>
                                                 </table>
@@ -195,67 +194,21 @@
     </section>
     <!-- [ Main Content ] end -->
 
-    <!-- Warning Section start -->
-    <!-- Older IE warning message -->
-    <!--[if lt IE 11]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade
-               <br/>to any of the following web browsers to access this website.
-            </p>
-            <div class="iew-container">
-                <ul class="iew-download">
-                    <li>
-                        <a href="http://www.google.com/chrome/">
-                            <img src="assets/images/browser/chrome.png" alt="Chrome">
-                            <div>Chrome</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.mozilla.org/en-US/firefox/new/">
-                            <img src="assets/images/browser/firefox.png" alt="Firefox">
-                            <div>Firefox</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.opera.com">
-                            <img src="assets/images/browser/opera.png" alt="Opera">
-                            <div>Opera</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.apple.com/safari/">
-                            <img src="assets/images/browser/safari.png" alt="Safari">
-                            <div>Safari</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                            <img src="assets/images/browser/ie.png" alt="">
-                            <div>IE (11 & above)</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <p>Sorry for the inconvenience!</p>
-        </div>
-    <![endif]-->
-    <!-- Warning Section Ends -->
-	<script src="lightbox/js/lightbox-plus-jquery.min.js"></script>
+    <script src="lightbox/js/lightbox-plus-jquery.min.js"></script>
     <!-- Required Js -->
     <?php include("process/script.php") ?>
-    <?php if(isset($_SESSION['status']) && $_SESSION['status'] != ''){?>
-    <script>
-        swal({
-          /*title: "Good job!",*/
-          text: "<?php echo $_SESSION['status'];?>",
-          icon: "<?php echo $_SESSION['status_code'];?>",
-          button: "Ok",
-        });
-    </script>
+    <?php if (isset($_SESSION['status']) && $_SESSION['status'] != '') { ?>
+        <script>
+            swal({
+                /*title: "Good job!",*/
+                text: "<?php echo $_SESSION['status']; ?>",
+                icon: "<?php echo $_SESSION['status_code']; ?>",
+                button: "Ok",
+            });
+        </script>
     <?php
-        unset($_SESSION['status'],$_SESSION['status_code']);
-    }?>
+        unset($_SESSION['status'], $_SESSION['status_code']);
+    } ?>
     <?php include("footer.php") ?>
 </body>
 

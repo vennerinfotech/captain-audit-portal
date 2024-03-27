@@ -1,7 +1,7 @@
 <?php
 //including the database connection file
 include("dbh.php");
-include("../session.php");
+include("session.php");
 
 //getting id of the data from url
 $id = $_GET['id'];

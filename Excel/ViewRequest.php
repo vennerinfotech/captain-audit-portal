@@ -1,12 +1,13 @@
 <?php
 include("../process/dbh.php");
-include("../session.php");
+include("../process/session.php");
 $html='<table>
 	<tr>
 		<td>No.</td>
 		<td>User Name</td>
 		<td>Purpose</td>
 		<td>Note</td>
+		<td>Date</td>
 		<td>Status</td>
 	</tr>';
 	$counter=1;
@@ -17,7 +18,7 @@ $html='<table>
         }
         elseif ($_SESSION['role']=="Store") 
         {
-            $stmt="SELECT * FROM `tbl_complain`, `tbl_users` where `tbl_complain`.u_id ='".$_SESSION['id']."'  AND `tbl_users`.u_id = '".$_SESSION['id']."'";
+            $stmt="SELECT * FROM `tbl_complain`, `tbl_users` where `tbl_complain`.u_id ='".$_SESSION['id']."'  AND `tbl_complain`.u_id =`tbl_users`.u_id ";
         }
         else
         {
@@ -31,6 +32,7 @@ $html='<table>
 				<td>'.$users['u_name'].'</td>
 				<td>'.$users['selectpur'].'</td>
 				<td>'.$users['note'].'</td>
+				<td>'.$users['created_at'].'</td>
 				<td>'.$users['status'].'</td>
 			</tr>';
 	}

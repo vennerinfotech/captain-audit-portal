@@ -1,4 +1,4 @@
-<?php include("../dbh.php"); ?>
+<?php include("process/dbh.php"); ?>
 <?php
 if(isset($_POST['c_id'])) {
   $sql = "select * from `tbl_users` where `u_id`='".$_POST['c_id']."'";

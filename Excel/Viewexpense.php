@@ -1,6 +1,6 @@
 <?php
 include("../process/dbh.php");
-include("../session.php");
+include("../process/session.php");
 $html='<table>
 	<tr>
 		<td>No.</td>

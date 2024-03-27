@@ -1,18 +1,13 @@
 <!-- [ Session ] start -->
 <?php 
-    include 'session.php';
+    include 'process/session.php';
     include('process/dbh.php');
 
-    if($_SESSION['role'] == "staff")
-    {
-        $result=mysqli_query($conn,"SELECT storestaff_id FROM `tbl_ststaffattendence` where store_id = '".$_SESSION['id']."' and staff_id = '".$_SESSION['staffid']."' and DATE(cdate) = date(NOW())") or die(mysqli_error($conn));
-        $row=mysqli_fetch_row($result);
+    $result=mysqli_query($conn,"SELECT day_id FROM `tbl_dayselfi` where u_id = '".$_SESSION['id']."' and DATE(cdate) = date(NOW())") or die(mysqli_error($conn));
+    while($row = mysqli_fetch_assoc($result)) {
+        $dayid = $row['day_id'];
     }
-    else
-    {
-        $result=mysqli_query($conn,"SELECT day_id FROM `tbl_dayselfi` where u_id = '".$_SESSION['id']."' and DATE(cdate) = date(NOW())") or die(mysqli_error($conn));
-        $row=mysqli_fetch_row($result);
-    }
+    
 ?>
 <!-- [ Session ] end -->
 <!DOCTYPE html>
@@ -101,12 +96,12 @@
                                         <div class="card-body">
                                             <h5>Out Attendance</h5>
                                             <div class="text-right m-3">
-                                                <button onclick="window.location='view-attandence.php';" type="button" class="btn btn-sm btn-primary">View Entry <?php echo $row[0]; ?></button>
+                                                <button onclick="window.location='view-attandence.php';" type="button" class="btn btn-sm btn-primary">View Entry</button>
                                             </div>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <form method="POST" action="process/outatten.php?edit=<?php echo $row[0]; ?>" enctype="multipart/form-data">
+                                                    <form method="POST" action="process/outatten.php?edit=<?php echo $dayid; ?>" enctype="multipart/form-data">
                                                         <div class="form-group col-md-12">
                                                             <div class="form-group col-md-6">
                                                                <div id="my_camera"></div>
@@ -118,8 +113,8 @@
                                                             <label id="attend" style="color: green;"></label>
                                                         </div>
                                                         <div class="form-group col-md-12">
-                                                            <input type="button" class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot()">
-                                                            <button class="btn btn-success">Submit</button>
+                                                            <input type="button" class="btn btn-primary" value="Take Snapshot" onClick="take_snapshot()" id="tack_snapshot">
+                                                            <button class="btn btn-success" style="display: none;" id="addSelfi">Submit</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -152,6 +147,8 @@
             $(".image-tag").val(data_uri);
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
         } );
+        jQuery("#addSelfi").css("display", "inline");
+        jQuery("#tack_snapshot").css("display", "none");
     }
 </script>
 <!-- Required Js -->

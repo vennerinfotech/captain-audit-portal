@@ -1,6 +1,6 @@
 <!-- [ Session ] start -->
-<?php require_once ('../process/dbh.php');
-require_once ('../session.php');
+<?php require_once ('dbh.php');
+require_once ('session.php');
 //getting id of the data from url
 
 $sql = "DELETE from `tbl_ststaffattendence` where storestaff_id='".$_GET['edit']."'";

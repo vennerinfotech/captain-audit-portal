@@ -1,6 +1,6 @@
 <!-- [ Session ] start -->
-<?php include 'process/dbh.php';?>
-    <?php include("session.php") ?>
+<?php include 'process/dbh.php'; ?>
+<?php include("process/session.php") ?>
 <!-- [ Session ] end -->
 <!DOCTYPE html>
 <html lang="en">
@@ -19,8 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Captain Audit Portal is specially designed for management of any brand easily. Here you can track all processes of your business. Captain Audit Portal is product of THE BRAND LANDMARK" />
-    <meta name="keywords"
-        content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
+    <meta name="keywords" content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
     <meta name="author" content="The Brand Landmark" />
 
     <!-- Favicon icon -->
@@ -65,7 +64,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-md-12">
                                             <div class="page-header-title">
-                                               <!--  <h5 class="m-b-10">Bootstrap Basic Tables</h5> -->
+                                                <!--  <h5 class="m-b-10">Bootstrap Basic Tables</h5> -->
                                             </div>
                                             <ul class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href=""><i class="feather icon-home"></i></a></li>
@@ -92,51 +91,45 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
-                                                            <th>Auditer Name</th>
+                                                            <th>Auditor Name</th>
                                                             <th>Store Name</th>
-                                                            <th>Audit/Date-Time</th>
+                                                            <th>Audit Date-Time</th>
                                                             <th>PDF</th>
                                                             <th>Edit</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                          <?php
-                                                $count=1;
-                                                if($_SESSION['role']=="Admin"){
-                                                    $result=mysqli_query($conn,"select * from `tbl_staudit`, `tbl_users` where `tbl_users`.u_id = `tbl_staudit`.emp_id") or die(mysqli_error($conn));
-                                                }
-                                                else if(($_SESSION['role']=="Store")){
-                                                    $result=mysqli_query($conn,"select * from `tbl_staudit`, `tbl_users` where `tbl_users`.u_id = `tbl_staudit`.emp_id and `tbl_staudit`.store_id='".$_SESSION['id']."'") or die(mysqli_error($conn));
-                                                }
-                                                else{
-                                                    $result=mysqli_query($conn,"select * from `tbl_staudit`, `tbl_users` where `tbl_users`.u_id = `tbl_staudit`.emp_id and `tbl_staudit`.emp_id='".$_SESSION['id']."'") or die(mysqli_error($conn));
-                                                }
+                                                        <?php
+                                                        $count = 1;
+                                                        if ($_SESSION['role'] == "Admin") {
+                                                            $result = mysqli_query($conn, "SELECT id, txtname, u_name, `time`, form_id, store_id  FROM `tbl_staudit`, `tbl_users` WHERE `tbl_users`.u_id = `tbl_staudit`.store_id") or die(mysqli_error($conn));
+                                                        } else if (($_SESSION['role'] == "Store")) {
+                                                            $result = mysqli_query($conn, "SELECT id, txtname, u_name, `time`, form_id, store_id FROM `tbl_staudit`, `tbl_users` WHERE `tbl_users`.u_id = `tbl_staudit`.store_id and `tbl_staudit`.store_id='" . $_SESSION['id'] . "'") or die(mysqli_error($conn));
+                                                        } else {
+                                                            $result = mysqli_query($conn, "SELECT id, txtname, u_name, `time`, form_id, store_id  FROM `tbl_staudit`, `tbl_users` WHERE `tbl_users`.u_id = `tbl_staudit`.store_id and `tbl_staudit`.emp_id='" . $_SESSION['id'] . "'") or die(mysqli_error($conn));
+                                                        }
 
+                                                        while ($row = mysqli_fetch_assoc($result)) {
+                                                        ?>
+                                                            <tr>
+                                                                <td><?php echo $count; ?></td>
+                                                                <td><?php echo $row["txtname"]; ?></td>
+                                                                <td><?php echo $row["u_name"]; ?></td>
+                                                                <td><?php echo $row["time"]; ?></td>
+                                                                <?php
+                                                                $filename = 'PDF/auditpdf/' . $row["form_id"] . '.pdf';
 
-                                                while($row=mysqli_fetch_assoc($result))
-                                                {
-                                                    $qry=mysqli_query($conn,"select u_name from tbl_users, tbl_staudit where tbl_users.u_id = tbl_staudit.store_id and tbl_users.u_id = '".$row['store_id']."'") or die(mysqli_error($conn));
-                                                    $row1=mysqli_fetch_assoc($qry);
-                                                ?>
-
-                                                        <tr>
-                                                            <td><?php echo $count;$count++; ?></td>
-                                                            <td><?php echo $row["txtname"]; ?></td>
-                                                            <td><?php echo $row1["u_name"]; ?></td>
-                                                            <td><?php echo $row["time"]; ?></td>
-															<?php
-																$filename = 'PDF/auditpdf/'.$row["form_id"].'.pdf';
-
-																if (file_exists($filename)) {
-																	echo "<td><a class='btn btn btn-sm btn-danger' href='$filename'>View PDF</a></td>";
-																} else {
-																	echo "<td><a class='btn btn btn-sm btn-success' href=\"PDF/Viewaudit.php?id=$row[id]&mu=$row[u_name]\">Generate PDF</a></td>";
-																}
-																?>
-                                                            <?php ?>
-                                                            <?php echo "<td><a class='btn btn btn-sm btn-primary' href=\"updaudit-portal.php?id=$row[id]\">Edit</a></td>";?>
-                                                        </tr>
-                                                        <?php } ?>
+                                                                if (file_exists($filename)) {
+                                                                    echo "<td><a class='btn btn btn-sm btn-danger' href='$filename'>View PDF</a></td>";
+                                                                } else {
+                                                                    echo "<td><a class='btn btn btn-sm btn-success' href=\"PDF/Viewaudit.php?id=$row[id]&mu=$row[u_name]\">Generate PDF</a></td>";
+                                                                }
+                                                                ?>
+                                                                <?php ?>
+                                                                <?php echo "<td><a class='btn btn btn-sm btn-primary' href=\"updaudit-portal.php?id=$row[id]\">Edit</a></td>"; ?>
+                                                            </tr>
+                                                        <?php $count++;
+                                                        } ?>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -152,21 +145,21 @@
             </div>
         </div>
     </section>
-    <?php if(isset($_SESSION['status']) && $_SESSION['status'] != ''){?>
-    <script>
-        swal({
-          /*title: "Good job!",*/
-          text: "<?php echo $_SESSION['status'];?>",
-          icon: "<?php echo $_SESSION['status_code'];?>",
-          button: "Ok",
-        });
-    </script>
-        <?php
-        unset($_SESSION['status'],$_SESSION['status_code']);
-    }?>
+    <?php if (isset($_SESSION['status']) && $_SESSION['status'] != '') { ?>
+        <script>
+            swal({
+                /*title: "Good job!",*/
+                text: "<?php echo $_SESSION['status']; ?>",
+                icon: "<?php echo $_SESSION['status_code']; ?>",
+                button: "Ok",
+            });
+        </script>
+    <?php
+        unset($_SESSION['status'], $_SESSION['status_code']);
+    } ?>
 
     <?php include("process/script.php") ?>
-<?php include("footer.php") ?>
+    <?php include("footer.php") ?>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 <!-- [ Session ] start -->
-   <?php include 'session.php';?>
+   <?php include 'process/session.php';?>
     <?php include('process/dbh.php') ?>
 <!-- [ Session ] end -->
 <!DOCTYPE html>
@@ -85,34 +85,47 @@
                                         
                                         <div class="card-body">
                                             <h5>Add Proof</h5>
-                                            <div class="text-right m-3">
-                                             <!-- <button onclick="window.location='viewentery.php';" type="button" class="btn btn-sm btn-primary">View Entry</button> -->
-                                        </div>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <form method="POST" action="process/updateassignproject.php" enctype="multipart/form-data">
-		                                                    <div class="form-group form-check">
-		                                                        <input type="hidden"  name="id" value="<?php echo $_GET['pid']; ?>" id="txte1">
-		                                                        <input type="radio"  name="proof" value="Without" id="txte1">
-		                                                        <label for="txte1" class="form-radio-label">Without Image
-		                                                        </label>&nbsp; &nbsp;
-		                                                             
-		                                                        <input type="radio" checked name="proof" value="With">
-		                                                        <label for="txte2" class="form-radio-label">With Image
-		                                                        </label>&nbsp; &nbsp;
-		                                                    </div>
-		                                                    <div class="form-group col-md-12">
-	                                                            <label for="txtphoto">Image</label>
-				                                                <input type="file" class="form-control" id="txtphoto" name="txtphoto" placeholder="Upload Image">
+                                                        <div class="row">
+                                                            <div class="form-group col-md-12">
+                                                                    <input type="hidden"  name="id" value="<?php echo $_GET['pid']; ?>" id="txte1">
+                                                                    <input type="radio"  name="proof" value="Without" id="txte1">
+                                                                    <label for="txte1" class="form-radio-label">Without Image
+                                                                    </label>&nbsp; &nbsp;
+                                                                         
+                                                                    <input type="radio" checked name="proof" value="With">
+                                                                    <label for="txte2" class="form-radio-label">With Image
+                                                                    </label>&nbsp; &nbsp;
+                                                            </div>
+		                                                    <div class="form-group col-md-6">
+	                                                            <label for="txtphoto">Proof Note</label>
+				                                                <input type="text" class="form-control" id="prooftext" name="prooftext" placeholder="Any Note">
 				                                            </div>
-
-                                                        <div class="form-group col-md-12">
-                                                        <button type="submit" name="btnadd" id="btnadd" class="btn btn-primary">Submit</button>
+                                                            <div class="form-group col-md-6">
+                                                                <label for="txtphoto">Image</label>
+                                                                <input type="file" class="form-control" id="txtphoto" name="txtphoto" placeholder="Upload Image">
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                                <button type="submit" name="btnadd" id="btnadd" class="btn btn-primary">Submit</button>
+                                                            </div>
                                                         </div>
                                                     </form>
                                                 </div>
-                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
                                               
     <!-- Warning Section Ends -->
 

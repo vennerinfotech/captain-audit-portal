@@ -1,5 +1,5 @@
 <!-- [ Session ] start -->
-    <?php include("session.php") ?>
+    <?php include("process/session.php") ?>
 <!-- [ Session ] end -->
     <?php include("process/dbh.php") ?>
     <?php 
@@ -77,7 +77,7 @@
                                             </div>
                                             <ul class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="userdashboard.php"><i class="feather icon-home"></i></a></li>
-                                                <li class="breadcrumb-item"><a href="add-expcategory.php">Add Category</a></li>
+                                                <li class="breadcrumb-item"><a href="#!">Add Expense Category</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@
                                 <div class="col-sm-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h5>Add category</h5>
+                                            <h5>Add Expense Category</h5>
                                             <div class="text-right m-3">
                                              <!-- <button onclick="window.location='Addexpense.php';" type="button" class="btn btn-sm btn-primary">Add Expense</button> -->
                                         </div>
@@ -99,7 +99,7 @@
                                                 <div class="col-md-12">
                                                     <form method="POST" action="process/addcat.php">
                                                         <div class="form-group col-md-12">
-                                                            <label>Category Name</label>
+                                                            <label>Expense Category Name</label>
                                                             <input type="text" class="form-control" id="catname" name="catname" placeholder="Enter Category Name" required>
                                                         </div>
                                                         <div class="form-group col-md-12">
@@ -114,7 +114,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>No.</th>
-                                                                    <th>Category</th>
+                                                                    <th>Expense Category</th>
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>

@@ -1,7 +1,7 @@
 <!-- [ Session ] start -->
 <?php 
     include 'process/dbh.php';
-    include("session.php");
+    include("process/session.php");
     
     if (isset($_POST["importRoyalty"])) {
     $fileName = $_FILES["file"]["tmp_name"];

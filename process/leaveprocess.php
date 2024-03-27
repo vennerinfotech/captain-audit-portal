@@ -1,6 +1,6 @@
 <!-- [ Session ] start -->
-    <?php require_once ('../process/dbh.php');
-    require_once ('../session.php');
+    <?php require_once ('dbh.php');
+    require_once ('session.php');
 
 //getting id of the data from url
 $id = $_SESSION['id'];
@@ -10,7 +10,9 @@ $start = $_POST['leavestartdate'];
 //echo "$reason";
 $end = $_POST['leaveenddate'];
 
-$sql = "INSERT INTO `tbl_userleave`(`ul_uid`, `ul_startdate`, `ul_enddate`, `ul_reason`, `ul_status`) VALUES ('$id','$start','$end','$reason','Pending')";
+date_default_timezone_set('Asia/Kolkata');
+
+$sql = "INSERT INTO `tbl_userleave`(`ul_uid`, `ul_startdate`, `ul_enddate`,	`ul_datetime`, `ul_reason`, `ul_status`) VALUES ('$id','$start','$end','".date( 'Y-m-d H:i:s')."','$reason','Pending')";
 
 $result = mysqli_query($conn, $sql);
 if($result==true){

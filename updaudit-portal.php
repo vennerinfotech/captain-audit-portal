@@ -1,5 +1,5 @@
 <?php include 'process/dbh.php'; ?>
-<?php include("session.php");
+<?php include("process/session.php");
 $uid=$_GET["id"];
 $sql = "SELECT * from `tbl_staudit` where id='$uid'";
 $result = mysqli_query($conn, $sql);

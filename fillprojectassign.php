@@ -1,21 +1,20 @@
 <!-- [ Session ] start -->
-    <?php include("session.php") ?>
-<!-- [ Session ] end -->
+<?php
 
-<?php 
-    require_once ('process/dbh.php');
-    $sql1 = "SELECT * FROM `tbl_users` where u_role='".$_SESSION['role']."'";
-//echo "$sql";
+include("process/session.php");
+require_once('process/dbh.php');
+$sql1 = "SELECT * FROM `tbl_users` where u_role='" . $_SESSION['role'] . "'";
 $result1 = mysqli_query($conn, $sql1);
-?>
 
-<?php 
-    $rid = $_GET['pid'];
-    $uid = $_GET['uid'];
-    require_once ('process/dbh.php');
-    $sql = "SELECT * FROM `project` where pid = '$rid' and u_id='$uid'";
-    $result = mysqli_query($conn, $sql);
-    $data = mysqli_fetch_assoc($result)
+$rid = $_GET['pid'];
+$uid = $_GET['uid'];
+require_once('process/dbh.php');
+$sql = "SELECT * FROM `project` where pid = '$rid' and u_id='$uid'";
+$result = mysqli_query($conn, $sql);
+$data = mysqli_fetch_assoc($result);
+$taskName = $data['pname'];
+$userId = $data['u_id'];
+$taskStatus = $data['status'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,8 +33,7 @@ $result1 = mysqli_query($conn, $sql1);
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Captain Audit Portal is specially designed for management of any brand easily. Here you can track all processes of your business. Captain Audit Portal is product of THE BRAND LANDMARK" />
-    <meta name="keywords"
-        content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
+    <meta name="keywords" content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
     <meta name="author" content="The Brand Landmark" />
 
     <!-- Favicon icon -->
@@ -66,7 +64,7 @@ $result1 = mysqli_query($conn, $sql1);
     <!-- [ Header ] start -->
     <?php include("header.php") ?>
     <!-- [ Header ] end -->
-    
+
     <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
@@ -85,7 +83,7 @@ $result1 = mysqli_query($conn, $sql1);
                                                 <li class="breadcrumb-item"><a href="userdashboard.php"><i class="feather icon-home"></i></a></li>
                                                 <li class="breadcrumb-item"><a href="">Task Management</a></li>
                                                 <li class="breadcrumb-item"><a href="emp-projectassign.php">Assign Project</a></li>
-                                               <li class="breadcrumb-item"><a href="emp-projectassign.php">Edit Project</a></li>
+                                                <li class="breadcrumb-item"><a href="emp-projectassign.php">Edit Project</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -103,34 +101,37 @@ $result1 = mysqli_query($conn, $sql1);
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <form action="process/changeprojectuser.php?pid=<?php echo $_GET['pid']; ?>" method="POST" enctype="multipart/form-data">
-                                                    <div class="row">
-                                                        <div class="form-group col-md-12">
-                                                            <label>Employee Name</label>
-                                                            <select class="form-control" id="Username" name="username" required>
-                                                                <option disabled="disabled" selected="selected">Default...</option>
-                                                                <?php
-                                                                    while ($users = mysqli_fetch_assoc($result1)) {
-                                                                        echo "<option value='$users[u_id]'>".$users['u_name']."</option>";
-                                                                    }
-                                                                ?>
-                                                            </select>
+                                                        <div class="row">
+                                                            <div class="form-group col-md-12">
+                                                                <label>Employee Name</label>
+                                                                <select class="form-control" id="substatus" name="substatus" required>
+                                                                    <option disabled="disabled">Default...</option>
+                                                                    <?php while ($users = mysqli_fetch_assoc($result1)) {
+                                                                        $selected = ($userId == $users['id']) ? "selected" : "";
+                                                                        echo "<option value=" . $users['u_id'] . " $selected>" . $users['u_name'] . "</option>";
+                                                                    } ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label>Project Name</label>
+                                                                <input type="text" class="form-control" id="Projectname" name="projectname" placeholder="Enter Project Name" readonly="true" value="<?php echo $taskName; ?>" required>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label>Status</label>
+                                                                <select class="form-control" id="substatus" name="substatus" required>
+                                                                    <option disabled="disabled" selected="selected">Default...</option>
+                                                                    <option value="Due" <?php if ($taskStatus == "Due") echo 'selected="selected"'; ?>>Due</option>
+                                                                    <option value="Submitted" <?php if ($taskStatus == "Submitted") echo 'selected="selected"'; ?>>Submitted</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label for="txtphoto">Proof Note</label>
+                                                                <input type="text" class="form-control" id="prooftext" name="prooftext" placeholder="Any Note">
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                                <button type="submit" name="" class="btn btn-primary">Submit</button>
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label>Project Name</label>
-                                                            <input type="text" class="form-control" id="Projectname" name="projectname" placeholder="Enter Project Name" readonly="true" value="<?php echo $data['pname'];?>" required>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>Start Date</label>
-                                                            <input type="Date" class="form-control" id="Startdate" name="startdate" readonly="true" placeholder="End Date" value="<?php echo $data['startdate'];?>">
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label>End Date</label>
-                                                            <input type="Date" class="form-control" id="Enddate" name="enddate" readonly="true" placeholder="End Date" value="<?php echo $data['duedate'];?>">
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <button type="submit" name="" class="btn btn-primary">Submit</button>
-                                                        </div>
-                                                    </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -146,26 +147,26 @@ $result1 = mysqli_query($conn, $sql1);
             </div>
         </div>
     </div>
-    
+
     <!-- Required Js -->
     <?php include("process/script.php") ?>
-    <link  href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet"/>
+    <!-- <link  href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet"/> -->
 
     <script>
         $("#Username").chosen();
     </script>
-    <?php if(isset($_SESSION['status']) && $_SESSION['status'] != ''){?>
-    <script>
-        swal({
-          /*title: "Good job!",*/
-          text: "<?php echo $_SESSION['status'];?>",
-          icon: "<?php echo $_SESSION['status_code'];?>",
-          button: "Ok",
-        });
-    </script>
+    <?php if (isset($_SESSION['status']) && $_SESSION['status'] != '') { ?>
+        <script>
+            swal({
+                /*title: "Good job!",*/
+                text: "<?php echo $_SESSION['status']; ?>",
+                icon: "<?php echo $_SESSION['status_code']; ?>",
+                button: "Ok",
+            });
+        </script>
     <?php
-        unset($_SESSION['status'],$_SESSION['status_code']);
-    }?>
+        unset($_SESSION['status'], $_SESSION['status_code']);
+    } ?>
     <?php include("footer.php") ?>
 </body>
 

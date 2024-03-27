@@ -2,13 +2,13 @@
 session_start();
 if(isset($_SESSION['useremail']) and isset($_SESSION['name']) and isset($_SESSION['role']) and isset($_SESSION['id'])){
 	if($_SESSION['role']=="Admin"){
-	      header("Location:userdashboard.php");
-	  }
-	  elseif ($_SESSION['role']=="Employee") {
+	    header("Location:userdashboard.php");
+	}
+	elseif ($_SESSION['role']=="Employee") {
 	    header("Location:emp-dashboard.php");
-	  }else{
-	     header("Location:emp-projectassign.php");
-	  }
+	}else{
+	    header("Location:emp-projectassign.php");
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -44,19 +44,10 @@ if(isset($_SESSION['useremail']) and isset($_SESSION['name']) and isset($_SESSIO
 			<div class="row align-items-center">
 				<div class="col-md-6">
 					<div class="card-body">
-						<form action="process/login.php?tkn=<?php echo $_GET['token'];?>" method="POST">
-							
+						<form action="process/login.php?tkn=" method="POST">
 							<input type="text" name="usertoken" id="token" style="display: none;">
 							<img src="assets/images/CAP_BLACK.png" width="180px" height="40px" alt="" class="img-fluid mb-4" style="display: block;margin-left: auto;margin-right: auto;">
 							<h4 class="mb-3 f-w-400">Login into your account</h4>
-							<div class="input-group mb-3">
-								<div class="form-check form-check-inline">
-								  	<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="admin" checked>
-								  	<label class="form-check-label" for="inlineRadio1">Admin / Employee / Store</label>&nbsp;&nbsp;&nbsp;
-								  	<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="staff">
-								  	<label class="form-check-label" for="inlineRadio2">Store Staff</label>
-								</div>
-							</div>
 							<div class="input-group mb-2">
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="feather icon-mail"></i></span>
@@ -76,7 +67,8 @@ if(isset($_SESSION['useremail']) and isset($_SESSION['name']) and isset($_SESSIO
 									<label for="checkbox-fill-a1" class="cr"> Save credentials</label>
 								</div>
 							</div>
-							<button class="btn btn-primary mb-4" name="Login">Login</button>
+							<!-- <button class="btn btn-primary mb-4" name="Login">Login</button> -->
+							<input type="submit" class="btn btn-primary mb-4" name="Login" value="Login">						
 						</form>
 					</div>
 				</div>

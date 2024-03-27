@@ -1,7 +1,7 @@
 
 <?php
 include_once "process/dbh.php";
-include_once "session.php";
+include_once "process/session.php";
 $db=$conn;
 // fetch query
 function fetch_data(){

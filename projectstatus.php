@@ -1,14 +1,12 @@
 <!-- [ Session ] start -->
-    <?php include("session.php") ?>
-<!-- [ Session ] end -->
 <?php
 
-require_once ('process/dbh.php');
-if($_SESSION['role']=="Admin"){
-    $sql = "SELECT * from `project`,`tbl_users` where  `project`.u_id = `tbl_users`.u_id order by subdate desc";
-}
-else{
-    $sql = "SELECT * from `project`,`tbl_users` where  `project`.u_id = `tbl_users`.u_id and assige_by='".$_SESSION['id']."' order by subdate desc";
+include("process/session.php");
+require_once('process/dbh.php');
+if ($_SESSION['role'] == "Admin") {
+    $sql = "SELECT * from `project`,`tbl_users` where  `project`.u_id = `tbl_users`.u_id order by pid desc";
+} else {
+    $sql = "SELECT * from `project`,`tbl_users` where  `project`.u_id = `tbl_users`.u_id and assige_by='" . $_SESSION['id'] . "' order by pid desc";
 }
 
 //echo "$sql";
@@ -32,8 +30,7 @@ $results = mysqli_query($conn, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Captain Audit Portal is specially designed for management of any brand easily. Here you can track all processes of your business. Captain Audit Portal is product of THE BRAND LANDMARK" />
-    <meta name="keywords"
-        content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
+    <meta name="keywords" content="admin templates, bootstrap admin templates, bootstrap 4, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Flash Able, Flash Able bootstrap admin template">
     <meta name="author" content="The Brand Landmark" />
 
     <!-- Favicon icon -->
@@ -43,7 +40,7 @@ $results = mysqli_query($conn, $sql);
     <!-- animation css -->
     <link rel="stylesheet" href="assets/plugins/animation/css/animate.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" href="lightbox/css/lightbox.min.css">
+    <link rel="stylesheet" href="lightbox/css/lightbox.min.css">
     <!-- vendor css -->
     <link rel="stylesheet" href="assets/css/style.css">
 
@@ -82,7 +79,7 @@ $results = mysqli_query($conn, $sql);
                                             </div>
                                             <ul class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="userdashboard.php"><i class="feather icon-home"></i></a></li>
-                                                <li class="breadcrumb-item"><a href="#!">Project Status</a></li>
+                                                <li class="breadcrumb-item"><a href="#!">Tasks Status</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -95,9 +92,9 @@ $results = mysqli_query($conn, $sql);
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3>All Employee/Store Task Status</h3>
-                                             <div style="float: right;">
-                                                <a class='btn btn-sm btn-danger' href="PDF/Employeeprostatus.php"><i class='feather icon-check-circle'> PDF</i></a>
+                                            <h3>All Employee/Store Tasks Status</h3>
+                                            <div style="float: right;">
+                                                <!-- <a class='btn btn-sm btn-danger' href="PDF/Employeeprostatus.php"><i class='feather icon-check-circle'> PDF</i></a> -->
                                                 <a class='btn btn-sm btn-success' href="Excel/Employeeprostatus.php"><i class='feather icon-check-circle'> EXCEL</i></a>
                                             </div>
                                         </div>
@@ -106,76 +103,71 @@ $results = mysqli_query($conn, $sql);
                                                 <table id="example" class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th align = "center">No.</th>
-                                                            <th align = "center" style='display:none;'>pid</th>
-                                                            <th align = "center" style='display:none;'>uid</th>
-                                                            <th align = "center">Employee/Store Name</th>
-                                                            <th align = "center">Task Name</th>
-                                                            <th align = "center">Start Date</th>
-                                                            <th align = "center">Due Date</th>
-                                                            <th align = "center">Priority</th>
-                                                            <th align = "center">Submission Date</th>
-                                                            <th align = "center">Total Due Days</th>
-                                                            <th align = "center">Status</th>
-                                                            <th align = "center">Image</th>
-                                                            <th align = "center">Assign By</th>
-                                                            <th align = "center">Action</th>
+                                                            <th align="center">No.</th>
+                                                            <th align="center" style='display:none;'>pid</th>
+                                                            <th align="center" style='display:none;'>uid</th>
+                                                            <th align="center">Employee/Store Name</th>
+                                                            <th align="center">Outlet Name</th>
+                                                            <th align="center">Task Deatail / Description</th>
+                                                            <th align="center">Start Date</th>
+                                                            <th align="center">Due Date</th>
+                                                            <th align="center">Submission Date</th>
+                                                            <th align="center">Total Due Days</th>
+                                                            <th align="center">Status</th>
+                                                            <th align="center">Note</th>
+                                                            <th align="center">Image</th>
+                                                            <th align="center">Assigned By</th>
+                                                            <th align="center">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <?php
-                                                        $counter=1;
-                                                            while ($users = mysqli_fetch_assoc($results)) {
-                                                                $counter;
+                                                        $counter = 1;
+                                                        while ($users = mysqli_fetch_assoc($results)) {
+                                                            $counter;
 
-                                                                $date1_ts = strtotime($users['duedate']);
-                                                                    $date2_ts = strtotime($users['subdate']);
-                                                                    $diff = $date2_ts - $date1_ts;
-                                                                    $dateDiff =  round($diff / 86400);
+                                                            $date1_ts = strtotime($users['duedate']);
+                                                            $date2_ts = strtotime($users['subdate']);
+                                                            $diff = $date2_ts - $date1_ts;
+                                                            $dateDiff =  (round($diff / 86400) <= 0) ?  0 : round($diff / 86400);
 
-                                                                echo "<tr>";
-                                                                echo "<td style='display:none;'>".$users['pid']."</td>";
-                                                                echo "<td style='display:none;'>".$users['u_id']."</td>";
-                                                                echo "<td>".$counter++."</td>";
-                                                                echo "<td>".$users['u_name']."</td>";
-                                                                echo "<td>".$users['pname']."</td>";
-                                                                echo "<td>".$users['startdate']."</td>";
-                                                                echo "<td>".$users['duedate']."</td>";
-                                                                echo "<td>".$users['priority']."</td>";
-                                                                echo "<td>".$users['subdate']."</td>";
-                                                                if($users['subdate']=="")
-                                                                {
-                                                                    echo "<td>".""."</td>";
-                                                                }
-                                                                else
-                                                                {
-                                                                    echo "<td>".$dateDiff."</td>";
-                                                                }
-                                                                 if($users['status']=="Due")
-                                                                {
-                                                                    echo "<td style='color:red;'>".$users['status']."</td>";
-                                                                }
-                                                                else
-                                                                {
-                                                                    echo "<td style='color:green;'>".$users['status']."</td>";
-                                                                }
-																echo "<td><a class='example-image-link' href='Upload/proof/".$users['proof_img']."' data-lightbox='example-1'><img class='example-image' src='Upload/proof/".$users['proof_img']."' height = 60px width = 60px></a></td>";
-                                                                 $qry = mysqli_query($conn, "select * from tbl_users where u_id ='".$users['assige_by']."'");
-                                                                $rs = mysqli_fetch_assoc($qry);
-                                                                echo "<td>".$rs['u_name']."</td>";
-                                                                echo "<td>"?>
-
-                                                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal" onclick='removedata(<?php echo $users["pid"]; ?>)'>Delete</button>
-
-
-                                                                 <button type="button" onclick="window.location='taskupdate.php?edit=<?php echo $users["pid"]; ?>'" class="btn btn-sm btn-info">Edit</button> </td>
-
-
-                                                                <?php  "</td>";
-                                                                echo "</tr>";
-
-
+                                                            echo "<tr>";
+                                                            echo "<td>" . $counter++ . "</td>";
+                                                            echo "<td style='display:none;'>" . $users['pid'] . "</td>";
+                                                            echo "<td style='display:none;'>" . $users['u_id'] . "</td>";
+                                                            echo "<td>" . $users['u_name'] . "</td>";
+                                                            echo "<td>" . $users['outlet_name'] . "</td>";
+                                                            echo "<td class='text-wrap width-400'>" . $users['pname'] . "</td>";
+                                                            echo "<td>" . $users['startdate'] . "</td>";
+                                                            echo "<td>" . $users['duedate'] . "</td>";
+                                                            if ($users['subdate'] == "" || $users['subdate'] == "0000-00-00 00:00:00") {
+                                                                echo "<td>" . "" . "</td>";
+                                                            } else {
+                                                                echo "<td>" . $users['subdate'] . "</td>";
                                                             }
+                                                            if ($users['subdate'] == "" || $users['subdate'] == "0000-00-00 00:00:00") {
+                                                                echo "<td>" . "" . "</td>";
+                                                            } else {
+                                                                echo "<td>" . $dateDiff . "</td>";
+                                                            }
+                                                            if ($users['status'] == "Due") {
+                                                                echo "<td style='color:red;'>" . $users['status'] . "</td>";
+                                                            } else {
+                                                                echo "<td style='color:green;'>" . $users['status'] . "</td>";
+                                                            }
+                                                            echo "<td>" . $users['proof_info'] . "</td>";
+                                                            echo "<td><a class='example-image-link' href='Upload/proof/" . $users['proof_img'] . "' data-lightbox='example-1'><img class='example-image' src='Upload/proof/" . $users['proof_img'] . "' height = 60px width = 60px></a></td>";
+                                                            $qry = mysqli_query($conn, "select * from tbl_users where u_id ='" . $users['assige_by'] . "'");
+                                                            $rs = mysqli_fetch_assoc($qry);
+                                                            echo "<td>" . $rs['u_name'] . "</td>";
+                                                            echo "<td>" ?>
+
+                                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal" onclick='removedata(<?php echo $users["pid"]; ?>)'>Delete</button>
+
+                                                            <button type="button" onclick="window.location='taskupdate.php?edit=<?php echo $users['pid']; ?>'" class="btn btn-sm btn-info">Review</button> </td>
+                                                        <?php "</td>";
+                                                            echo "</tr>";
+                                                        }
                                                         ?>
                                                     </tbody>
                                                 </table>
@@ -193,65 +185,62 @@ $results = mysqli_query($conn, $sql);
             </div>
         </div>
     </div>
-    <?php 
-            if(isset($_POST["btnremove"]))
-            {
+    <?php
+    if (isset($_POST["btnremove"])) {
 
-                $res=mysqli_query($conn,"delete from project where pid='".$_POST["hfdid"]."'");
-                if($res)
-                    echo "<script>window.location='projectstatus.php';</script>";
-            }
+        $res = mysqli_query($conn, "delete from project where pid='" . $_POST["hfdid"] . "'");
+        if ($res)
+            echo "<script>window.location='projectstatus.php';</script>";
+    }
 
-        ?>
-        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Confirm Remove </h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                                    </div>
-                                                    <form method="post">
-                                                    <div class="modal-body">
-                                                       Are you sure want to delete this record ?
-                                                       <input type="hidden" name="hfdid" id="hfdid">
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                                        <button type="submit" name="btnremove" class="btn btn-primary">Yes</button>
-                                                    </div>
-                                                </form>
-                                                </div>
-                                            </div>
-                                        </div>
-    
+    ?>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm Remove </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="material-icons">close</i>
+                    </button>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+                        Are you sure want to delete this record ?
+                        <input type="hidden" name="hfdid" id="hfdid">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="submit" name="btnremove" class="btn btn-primary">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Required Js -->
     <!-- Required Js -->
-	<script src="lightbox/js/lightbox-plus-jquery.min.js"></script>
+    <script src="lightbox/js/lightbox-plus-jquery.min.js"></script>
     <?php include("process/script.php") ?>
     <script type="text/javascript">
-            function removedata(val)
-            {
-                
-                $("#hfdid").val(val);
-            }
+        function removedata(val) {
 
-        </script>
-        <?php if(isset($_SESSION['status']) && $_SESSION['status'] != ''){?>
-    <script>
-        swal({
-          /*title: "Good job!",*/
-          text: "<?php echo $_SESSION['status'];?>",
-          icon: "<?php echo $_SESSION['status_code'];?>",
-          button: "Ok",
-        });
+            $("#hfdid").val(val);
+        }
     </script>
+    <?php if (isset($_SESSION['status']) && $_SESSION['status'] != '') { ?>
+        <script>
+            swal({
+                /*title: "Good job!",*/
+                text: "<?php echo $_SESSION['status']; ?>",
+                icon: "<?php echo $_SESSION['status_code']; ?>",
+                button: "Ok",
+            });
+        </script>
     <?php
-    unset($_SESSION['status'],$_SESSION['status_code']);
-}?>
-<?php include("footer.php") ?>
+        unset($_SESSION['status'], $_SESSION['status_code']);
+    } ?>
+    <?php include("footer.php") ?>
 </body>
 
 </html>

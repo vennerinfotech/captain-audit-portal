@@ -1,5 +1,5 @@
 <?php
-include "../process/dbh.php";
+include "dbh.php";
 
 $users_arr = array();
 $hsal = 0;

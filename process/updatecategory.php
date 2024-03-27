@@ -1,7 +1,7 @@
 <?php
 
-require_once ('../process/dbh.php');
-require_once ('../session.php');
+require_once ('dbh.php');
+require_once ('session.php');
 
 $id = $_GET['id'];
 $name = $_POST['catname'];

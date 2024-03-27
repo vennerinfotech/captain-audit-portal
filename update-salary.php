@@ -1,6 +1,6 @@
 <!-- [ Session ] start -->
 <?php 
-    include("session.php"); 
+    include("process/session.php"); 
     include("process/dbh.php");
 
     $sql = "SELECT * FROM tbl_salary where s_id = '".$_GET['stid']."'";

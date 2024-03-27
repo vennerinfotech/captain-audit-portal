@@ -1,6 +1,6 @@
 
 <!-- [ Session ] start -->
-    <?php include("session.php") ?>
+    <?php include("process/session.php") ?>
 <!-- [ Session ] end -->
 <?php
 
@@ -78,7 +78,7 @@ error_reporting(0);
                                             </div>
                                             <ul class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="userdashboard.php"><i class="feather icon-home"></i></a></li>
-                                                <li class="breadcrumb-item"><a href="">Store Task</a></li>
+                                                <li class="breadcrumb-item"><a href="">Task By Store</a></li>
                                                 
                                             </ul>
                                         </div>
@@ -92,7 +92,7 @@ error_reporting(0);
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3>Store Task</h3>
+                                            <h3>Task By Store</h3>
                                         </div>
                                         <div class="card-body table-border-style">
                                             <div class="table-responsive">
@@ -104,7 +104,6 @@ error_reporting(0);
                                                             <th>Project Name</th>
                                                             <th>Start Date</th>
                                                             <th>Due Date</th>
-                                                            <th>Priority</th>
                                                             <th>Status</th>
                                                             <th>Task Assign</th>
                                                         </tr>
@@ -129,7 +128,6 @@ error_reporting(0);
                                                             <td><?php echo $row["p_naem"]; ?></td>
                                                             <td><?php echo $row["s_date"]; ?></td>
                                                             <td><?php echo $row["e_date"]; ?></td>
-                                                            <td><?php echo $row["t_priority"]; ?></td>
                                                             
                                                                 <?php 
                                                                     if($row['status']=="Assigned"){?>

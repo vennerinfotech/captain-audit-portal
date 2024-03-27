@@ -1,6 +1,6 @@
 <!-- [ Session ] start -->
 <?php 
-    include("session.php"); 
+    include("process/session.php"); 
     include("process/dbh.php");
     
 ?>
@@ -69,7 +69,7 @@
                                             </div>
                                             <ul class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href=""><i class="feather icon-home"></i></a></li>
-                                                <li class="breadcrumb-item"><a href="add-expence.php">Pay Salary</a></li>
+                                                <li class="breadcrumb-item"><a href="#!">Pay Advance</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@
                                 <div class="col-sm-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h5>Pay Salary</h5>
+                                            <h5>Pay Advance</h5>
                                             <div class="text-right m-3">
                                             <!-- <button onclick="window.location='Addcategory.php';" type="button" class="btn btn-sm btn-primary">View Category</button> -->
                                         </div>
@@ -129,7 +129,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-md-12">
-                                                             <button id="btnadd" type="submit" name="btnadd" class="btn btn-primary">PAID</button>
+                                                             <button id="btnadd" type="submit" name="btnadd" class="btn btn-primary">PAY</button>
                                                         </div>
                                                      </div>
                                                 </form>
